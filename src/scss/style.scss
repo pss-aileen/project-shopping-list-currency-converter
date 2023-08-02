@@ -1,0 +1,47 @@
+*,
+*::before,
+*::after,
+input,
+textarea {
+  box-sizing: border-box;
+}
+
+.all-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+body {
+  // font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  // font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+  font-family: Dejavu Sans, Arial, Verdana, sans-serif;
+  background: #f8f8f8;
+}
+
+.setting-table {
+  width: 100%;
+  background: #f8f8f8;
+
+  &__table-row {
+
+  }
+
+  &__table-header,
+  &__table-data {
+    padding: 8px;
+  }
+
+  &__table-header {
+  }
+
+  &__table-data {
+
+  }
+
+}
+
+.currency-pulldown {
+  width: 100%;
+  padding: 8px;
+}
