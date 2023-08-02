@@ -1,0 +1,1 @@
+"use strict";{async function callApi(){const t=await fetch("https://api.exchangerate.host/symbols");showData(await t.json())}function showData(t){const s=Object.keys(t.symbols);console.log(s.length)}callApi()}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRAVEL MONEY SUPPORTER</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="all-wrapper">
+
+    <header class="header">
+      <h1>TRAVEL MONEY SUPPORTER</h1>
+
+      <nav>
+        <ul>
+          <li><a href="#">how to use</a></li>
+          <li><a href="#">about</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="setting-section">
+        <table class="setting-table">
+          <tr class="setting-table__table-row">
+            <th class="setting-table__table-header">
+              from
+            </th>
+            <td class="setting-table__table-data">
+              <select name="from" id="from" class="currency-pulldown">
+                <option value="">-- select currency --</option>
+              </select>
+            </td>
+          </tr>
+          <tr class="setting-table__table-row">
+            <th class="setting-table__table-header">
+              to
+            </th>
+            <td class="setting-table__table-data">
+              <select name="to" id="to" class="currency-pulldown">
+                <option value="">-- select currency --</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section class="rate-section">
+        <p>
+          <span>RM1</span> = <span>¥30</span>
+        </p>
+      </section>
+
+      <section class="search-currency-section">
+        <p>
+          do you know currency? search from <a href="#" target="_blank">here</a>.
+        </p>
+      </section>
+
+      <section id="output"> 
+
+      </section>
+
+      <section>
+        <table class="products-list-table">
+          <tr>
+            <th>product</th>
+            <th>price(from)</th>
+            <th>price(to)</th>
+          </tr>
+          <tr>
+            <th>total</th>
+            <td>1000</td>
+            <td>1000</td>
+          </tr>
+          <tr>
+            <td><input type="text" placeholder="carrot"></td>
+            <td><input type="text" placeholder="1000"></td>
+            <td><span>1000</span></td>
+          </tr>
+        </table>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+
+    </footer>
+
+  </div><!--/all-wrapper-->
+
+  <script src="js/main-min.js"></script>
+</body>
+</html>
