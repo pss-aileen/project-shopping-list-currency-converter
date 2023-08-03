@@ -8,7 +8,7 @@ textarea {
 
 .all-wrapper {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 48px auto;
 }
 
 
@@ -23,19 +23,19 @@ body {
   width: 100%;
   background: #f8f8f8;
 
-  &__table-row {
+  &__tr {
 
   }
 
-  &__table-header,
-  &__table-data {
+  &__th,
+  &__td {
     padding: 8px;
   }
 
-  &__table-header {
+  &__th {
   }
 
-  &__table-data {
+  &__td {
 
   }
 
@@ -44,4 +44,49 @@ body {
 .currency-pulldown {
   width: 100%;
   padding: 8px;
+}
+
+.products-list-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  &__tr {
+
+  }
+
+  &__th,
+  &__td {
+    padding: 8px;
+    border: 1px solid;
+  }
+
+  &__th {
+    text-align: center;
+    background: #eee;
+  }
+
+  &__td:nth-child(1) {
+    width: 30%;
+  }
+
+  &__td:nth-child(2) {
+    width: 30%;
+  }
+
+  &__td:nth-child(3) {
+    width: 30%;
+  }
+
+  &__td:nth-child(4) {
+    width: 32px;
+    text-align: center;
+  }
+
+  &__td {
+
+  }
+
+  &__input {
+    width: 100%;
+  }
 }

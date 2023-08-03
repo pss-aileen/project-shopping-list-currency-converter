@@ -2,3 +2,4 @@
 /node_modules
 /for_build
 *.md
+.DS_Store
