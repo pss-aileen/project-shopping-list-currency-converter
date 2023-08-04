@@ -1,0 +1,1 @@
+async function fetchSymbols(){try{const o=await fetch("https://api.exchangerate.host/symbols");if(!o.ok)throw new Error(`HTTPS error: ${o.status}`);return o.json()}catch(o){console.error(`Could not get products: ${o}`)}}console.log("リクエストを開始...");const promise=fetchSymbols();promise.then(o=>console.log(o.symbols));
