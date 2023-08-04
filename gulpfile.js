@@ -28,6 +28,7 @@ function js() {
     .pipe(browserSync.stream());
 };
 
+
 exports.watch = watch;
 exports.style = style;
 exports.js = js;
