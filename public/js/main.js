@@ -1,4 +1,5 @@
 import { CallSymbolsApi } from "./modules/CallSymbolsApi.js";
+import { CallRateApi } from "./modules/CallRateApi.js";
 
 
 // grobal変数
@@ -20,7 +21,7 @@ Object.keys(data["symbols"])
     showSymbols(to, data)
     pickUpSymbols()
   })
-  ;
+;
   
 // 以下、一旦コード整理
 
@@ -52,6 +53,17 @@ function getSymbolsSettingFromLocalStorage(target) {
   return data;
 }
 
+
+function callRateApiOnFunction(URL) {
+  // rate api を呼び出す
+  const promiseRate = CallRateApi(URL);
+  promiseRate
+    .then((data) =>
+    console.log(data)
+    );
+}
+
+
 // localStorageからもってきた値を、from, toにセットする
 function setLocalSorageSymbolsOnHTML(where, localStorageData) {
   where.toSelectedIndex = localStorageData;
@@ -69,14 +81,23 @@ function pickUpSymbols() {
   from.addEventListener('change', () => {
     globalFrom = from.value;
     console.log(globalFrom);
-    setCurrencyAPI(globalFrom, globalTo);
+    const apiURL = setCurrencyAPI(globalFrom, globalTo);
+    if (apiURL) {
+      console.log(apiURL);
+      callRateApiOnFunction(apiURL);
+    }
     // API呼び出しが必要...？
   })
 
   to.addEventListener('change', () => {
     globalTo = to.value;
     console.log(globalTo);
-    setCurrencyAPI(globalFrom, globalTo);
+    const apiURL = setCurrencyAPI(globalFrom, globalTo);
+    if (apiURL) {
+      console.log(apiURL);
+      callRateApiOnFunction(apiURL);
+    }
+
     // API呼び出しが必要...？
   })
 }
@@ -89,4 +110,6 @@ function setCurrencyAPI(fromSymbols, toSymbols) {
     return APIURL;
   }
 
-}
+
+
+} // end
