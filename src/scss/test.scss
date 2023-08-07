@@ -1,13 +1,33 @@
+*,
+*::before,
+*::after,
+input,
+textarea {
+  box-sizing: border-box;
+  color: #333;
+}
+
+.all-wrapper {
+  max-width: 320px;
+  margin: 48px auto;
+}
+
+h1 {
+  font-size: 20px;
+}
+
 body {
-  background: cornsilk;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: #333;
 }
 
 .pick-currency {
   padding: 0;
   position: relative;
   height: 70px;
-  // border: 1px solid red;
-  border: none;
+  border: 1px solid red;
+  // border: none;
   overflow: hidden;
 
   &:has(.checked) &__label{
@@ -16,7 +36,7 @@ body {
 
   &.is-expand {
     position: static;
-    height: 100px;
+    height: 400px;
     overflow-y: scroll;
   }
 
@@ -27,7 +47,7 @@ body {
   &__label {
     display: block;
     // background: #f8f8f8;
-    padding: 16px 16px 16px 16px;
+    padding: 8px;
     position: absolute;
     top: 0;
     left: 0;
@@ -41,7 +61,6 @@ body {
   }
 
   &__label.checked {
-    // background: red;
     z-index: 999;
   }
 
