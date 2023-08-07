@@ -5,95 +5,101 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shppping List Currency Converter - this app support your travel with money?</title>
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <div class="all-wrapper">
 
+    <div>
+
+    </div>
+
+    <!-- <fieldset class="pick-currency is-expand"> -->
+    <!-- <fieldset class="pick-currency">
+      <label class="pick-currency__label">
+        <input type="radio" name="from-currency" value="MYR" class="pick-currency__input">
+        <span class="pick-currency__code">MYR</span>
+        <span class="pick-currency__description">Malaysian Ringgit</span>
+      </label>
+      <label class="pick-currency__label">
+        <input type="radio" name="from-currency" value="JPY" class="pick-currency__input">
+        <span class="pick-currency__code">JPY</span>
+        <span class="pick-currency__description">Japanese Yen</span>
+      </label>
+      <label class="pick-currency__label checked">
+        <input type="radio" name="from-currency" value="JPY" class="pick-currency__input">
+        <span class="pick-currency__code">JPY</span>
+        <span class="pick-currency__description">Japanese Yen</span>
+      </label>
+      <label class="pick-currency__label">
+        <input type="radio" name="from-currency" value="JPY" class="pick-currency__input">
+        <span class="pick-currency__code">JPY</span>
+        <span class="pick-currency__description">Japanese Yen</span>
+      </label>
+    </fieldset> -->
+
+
     <header class="header">
       <h1 class="site-title">Shppping List Currency Converter</h1>
-      <p class="site-lead">This app support your shopping abroad</p>
-
-      <div class="nav-trigger">
-        <span class="nav-trigger">menu</span>
-      </div>
-      <nav class="global-nav">
-        <ul>
-          <li><a href="#">how to use</a></li>
-          <li><a href="#">about</a></li>
-        </ul>
-      </nav>
+      <p class="site-lead">This app helps to manage your travel budget.</p>
     </header>
 
     <main class="main">
-      <section class="setting-section">
-        <div class="setting">
-          <div class="setting__from">
-            <select name="from" id="from" class="currency-pulldown">
-              <option value="">pick currency</option>
-            </select>
-            <div id="from-currency" class="setting__currency-box">
-              RM ???
-            </div>
-          </div>
-          <div class="setting__switch">
-            ↔︎
-          </div>
-          <div class="setting__to">
-            <select name="to" id="to" class="currency-pulldown">
-              <option value="">pick currency</option>
-            </select>
-            <div id="to-currency" class="setting__currency-box">
-              JPY ???
-            </div>
-          </div>
-
+      <section class="set-currency-section">
+        <div class="set-value">
+          <span class="set-value__decoration" id="from-currency-price">FROM</span>
+          <select name="" id="from-currency" class="set-value__pulldown">
+            <option value="">MYR</option>
+            <option value="">MYR</option>
+            <option value="">MYR</option>
+            <option value="">MYR</option>
+          </select>
+        </div>
+        <div id="swap-currency" class="btn-swap">
+          ↑↓
+        </div>
+        <div class="set-value">
+          <span class="set-value__decoration" id="to-currency-price">TO</span>
+          <select name="" id="from-currency" class="set-value__pulldown">
+            <option value="">JPY</option>
+            <option value="">MYR</option>
+            <option value="">MYR</option>
+            <option value="">MYR</option>
+          </select>
         </div>
       </section>
 
-      <section class="search-currency-section">
-        <p>
-          do you know currency? search from <a href="#" target="_blank">here</a>.
-        </p>
-      </section>
+      <button id="save-currency" class="btn">SAVE CURRENCY</button>
 
-      <button id="btn-storage-currency">storage currency</button>
-
-
+      <hr class="horizontal-rule">
+      
       <section class="shopping-list-section">
+        <h2>Shopping List</h2>
 
-        <h2 class="content-heading">Shopping List</h2>
-
-        <table class="products-list-table">
-          <tr class="products-list-table__tr">
-            <th class="products-list-table__th">product</th>
-            <th class="products-list-table__th">price(from)</th>
-            <th class="products-list-table__th">price(to)</th>
-            <th class="products-list-table__th">d</th>
-          </tr>
-          <tr class="products-list-table__tr">
-            <td class="products-list-table__td">total</t>
-            <td class="products-list-table__td" id="from-total">?</td>
-            <td class="products-list-table__td"><span id="total-calculated">?</span></td>
-            <td class="products-list-table__td"></td>
-          </tr>
-          <tr class="products-list-table__tr">
-            <td class="products-list-table__td"><input type="text" placeholder="carrot" class="products-list-table__input product-name" value="きゃろっと"></td>
-            <td class="products-list-table__td"><input type="number" placeholder="1000" class="products-list-table__input product-price" value="10"></td>
-            <td class="products-list-table__td"><span class="product-price-calculated"></span></td>
-            <td class="products-list-table__td"><span class="product-delete">❌</span></td>
-          </tr>
-          <tr class="products-list-table__tr">
-            <td class="products-list-table__td"><input type="text" placeholder="vege" class="products-list-table__input product-name"></td>
-            <td class="products-list-table__td"><input type="number" placeholder="1000" class="products-list-table__input product-price" value="20"></td>
-            <td class="products-list-table__td"><span class="product-price-calculated"></span></td>
-            <td class="products-list-table__td"><span class="product-delete">❌</span></td>
-          </tr>
-        </table>
-
-        <button id="check">CHECK</button>
-        <button id="btn-add-list">ADD LIST</button>
+        <div class="shopping-lists">
+          <div class="shopping-list">
+            <div class="shopping-list__product-name">
+              <textarea class="shopping-list__product-name-textarea">carrot</textarea>
+            </div>
+            <div class="hopping-list__product-price">
+              <table>
+                <tr>
+                  <td><input type="text" value="100"></td>
+                  <td>JPY</td>
+                </tr>
+                <tr>
+                  <td>3000</td>
+                  <td>MYR</td>
+                </tr>
+              </table>
+            </div>
+            <div class="hopping-list__delete">
+              ×
+            </div>
+          </div>
+        </div>
       </section>
 
     </main>
