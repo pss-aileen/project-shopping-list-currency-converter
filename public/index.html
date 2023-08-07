@@ -12,10 +12,13 @@
   <div class="all-wrapper">
 
     <header class="header">
-      <h1>Shppping List Currency Converter</h1>
-      <p>this app support your travel with money?</p>
+      <h1 class="site-title">Shppping List Currency Converter</h1>
+      <p class="site-lead">This app support your shopping abroad</p>
 
-      <nav>
+      <div class="nav-trigger">
+        <span class="nav-trigger">menu</span>
+      </div>
+      <nav class="global-nav">
         <ul>
           <li><a href="#">how to use</a></li>
           <li><a href="#">about</a></li>
@@ -25,34 +28,28 @@
 
     <main class="main">
       <section class="setting-section">
-        <table class="setting-table">
-          <tr class="setting-table__tr">
-            <th class="setting-table__th">
-              from
-            </th>
-            <td class="setting-table__td">
-              <select name="from" id="from" class="currency-pulldown">
-                <option value="">-- select Country Currency Codes --</option>
-              </select>
-            </td>
-          </tr>
-          <tr class="setting-table__tr">
-            <th class="setting-table__th">
-              to
-            </th>
-            <td class="setting-table__td">
-              <select name="to" id="to" class="currency-pulldown">
-                <option value="">-- select Country Currency Codes --</option>
-              </select>
-            </td>
-          </tr>
-        </table>
-      </section>
+        <div class="setting">
+          <div class="setting__from">
+            <select name="from" id="from" class="currency-pulldown">
+              <option value="">pick currency</option>
+            </select>
+            <div id="from-currency" class="setting__currency-box">
+              RM ???
+            </div>
+          </div>
+          <div class="setting__switch">
+            ↔︎
+          </div>
+          <div class="setting__to">
+            <select name="to" id="to" class="currency-pulldown">
+              <option value="">pick currency</option>
+            </select>
+            <div id="to-currency" class="setting__currency-box">
+              JPY ???
+            </div>
+          </div>
 
-      <button id="btn-storage-currency">storage currency</button>
-
-      <section class="rate-section">
-        ??? 1 = ??? 0
+        </div>
       </section>
 
       <section class="search-currency-section">
@@ -61,11 +58,13 @@
         </p>
       </section>
 
-      <section id="output"> 
+      <button id="btn-storage-currency">storage currency</button>
 
-      </section>
 
-      <section>
+      <section class="shopping-list-section">
+
+        <h2 class="content-heading">Shopping List</h2>
+
         <table class="products-list-table">
           <tr class="products-list-table__tr">
             <th class="products-list-table__th">product</th>
