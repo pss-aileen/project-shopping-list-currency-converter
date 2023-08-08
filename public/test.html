@@ -5,32 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>API TEST</title>
   <link rel="stylesheet" href="css/test.css">
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.9.2/css/flag-icons.min.css"
+/>
 </head>
 <body>
   <div class="all-wrapper">
 
     <h1>pick currency pulldown</h1>
     
-      <fieldset class="pick-currency is-expand">
+      <fieldset class="pick-currency">
         <label class="pick-currency__label">
           <input type="radio" name="from-currency" value="MYR" class="pick-currency__input">
-          <span class="pick-currency__code">MYR</span>
-          <span class="pick-currency__description">Malaysian Ringgit</span>
+          <div class="pick-currency__country-flag-wrapper">
+            <span class="fi fi-my fis pick-currency__country-flag-image"></span>
+          </div>
+          <div class="pick-currency__info-wrapper">
+            <span class="pick-currency__code">MYR</span>
+            <span class="pick-currency__description">Malaysian Ringgit</span>
+          </div>
         </label>
         <label class="pick-currency__label">
-          <input type="radio" name="from-currency" value="JPY" class="pick-currency__input">
-          <span class="pick-currency__code">JPY</span>
-          <span class="pick-currency__description">Japanese Yen</span>
-        </label>
-        <label class="pick-currency__label checked">
-          <input type="radio" name="from-currency" value="JPY" class="pick-currency__input">
-          <span class="pick-currency__code">JPY</span>
-          <span class="pick-currency__description">Japanese Yen</span>
+          <input type="radio" name="from-currency" value="MYR" class="pick-currency__input">
+          <div class="pick-currency__country-flag-wrapper">
+            <span class="fi fi-jp fis pick-currency__country-flag-image"></span>
+          </div>
+          <div class="pick-currency__info-wrapper">
+            <span class="pick-currency__code">JPY</span>
+            <span class="pick-currency__description">Japanese Yen</span>
+          </div>
         </label>
         <label class="pick-currency__label">
-          <input type="radio" name="from-currency" value="JPY" class="pick-currency__input">
-          <span class="pick-currency__code">JPY</span>
-          <span class="pick-currency__description">Japanese Yen</span>
+          <input type="radio" name="from-currency" value="MYR" class="pick-currency__input">
+          <div class="pick-currency__country-flag-wrapper">
+            <span class="fi fi-mr fis pick-currency__country-flag-image"></span>
+          </div>
+          <div class="pick-currency__info-wrapper">
+            <span class="pick-currency__code">MYR</span>
+            <span class="pick-currency__description">Malaysian Ringgit</span>
+          </div>
+        </label>
+        <label class="pick-currency__label">
+          <input type="radio" name="from-currency" value="MYR" class="pick-currency__input">
+          <div class="pick-currency__country-flag-wrapper">
+            <span class="fi fi-kr fis pick-currency__country-flag-image"></span>
+          </div>
+          <div class="pick-currency__info-wrapper">
+            <span class="pick-currency__code">DON</span>
+            <span class="pick-currency__description">Korean Don</span>
+          </div>
         </label>
       </fieldset>
 
