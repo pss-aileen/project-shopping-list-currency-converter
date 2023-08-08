@@ -13,6 +13,7 @@ input,
 textarea {
   box-sizing: border-box;
   color: #333;
+  // width: auto;
 }
 
 .all-wrapper {
@@ -27,6 +28,11 @@ body {
   color: #333;
 }
 
+h1,
+h2 {
+  text-align: center;
+}
+
 .btn {
   background: rgb(0,123,187);
   background: linear-gradient(135deg, rgba(0,123,187,1) 0%, rgba(0,165,187,1) 100%);
@@ -36,8 +42,9 @@ body {
   width: 100%;
   border-radius: 999px;
   border: none;
-  margin-top: 24px;
+  margin-top: 16px;
   cursor: pointer;
+  box-shadow: 0 0 16px rgb(0 0 0 / .1);
 }
 
 .horizontal-rule {
@@ -58,59 +65,61 @@ body {
 }
 
 .set-currency-section {
-  margin-top: 24px;
+  margin-top: 32px;
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   gap: 8px;
-}
-.set-value {
-  background: #eee;
-  // padding: 16px;
-  display: flex;
   justify-content: space-between;
-  border-radius: 4px;
-  position: relative;
+  align-items: center;
+}
 
-  &__decoration {
-    color: #999;
+
+.set-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 8px;
+  box-shadow: 0 0 16px rgb(0 0 0 / .1);
+  border-radius: 8px;
+  flex: 1;
+  justify-content: space-between;
+  border: 1px solid #eee;
+
+  .fi.fis {
+    width: 32px;
+    aspect-ratio: 1;
+    display: block;
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    border: 1px solid #eee;
+  }
+
+  &__swaiper {
+    width: 32px;
+    text-align: center;
+    font-size: 20px;
+  }
+
+  &__currency {
     font-size: 18px;
-    position: absolute;
-    top: 50%;
-    left: 16px;
-    transform: translateY(-50%);
-    z-index: 0;
+    // font-weight: bold;
   }
 
-  &__pulldown {
-    appearance: none;
-    background: transparent;
-    border: none;
-    font-size: 18px;
-    padding: 16px 48px 16px 16px;
-    width: 100%;
-    text-align: right;
-    z-index: 1;
-    direction: rtl;
+  &__btn-down {
+    cursor: pointer;
   }
+}
 
-  &__pulldown option {
-    text-align: right;
-  }
-
-  &::after {
-    display: inline-block;
-    content: "\F282";
-    font-family: "bootstrap-icons";
-    // color: red;
-    // background: red;
-    position: absolute;
-    top: 50%;
-    right: 16px;
-    transform: translateY(-50%);
-    z-index: 0;
-  }
-
-
+.show-currency-section {
+  background: #eee;
+  color: #666;
+  text-align: center;
+  padding: 16px;
+  margin-top: 16px;
+  font-size: 18px;
+  border-radius: 8px;
 }
 
 .btn-swap {
@@ -120,4 +129,166 @@ body {
 h2 {
   color: #00A5BB;
   margin-top: 0;
+  margin-bottom: 32px;
+  font-size: 32px;
+}
+
+
+// shppping list 
+
+.shopping-list {
+  display: flex;
+  gap: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 0 16px rgb(0 0 0 / .1);
+
+  & + & {
+    margin-top: 16px;
+  }
+
+  &__product-name {
+    width: calc((100% - 64px) / 2);
+    background: #eee;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 4px 0 0 4px;
+  }
+
+  &__product-name-input {
+    // あとでjsで行数に合わせて高さを変更できるようにする
+    width: auto;
+    // height: 100%;
+    background: transparent;
+    text-align: center;
+    resize: none;
+    border: none;
+    margin: 0;
+    // border-bottom: 1px dashed #aaa;
+    // color: #007BBB;
+    font-size: 16px;
+  }
+
+  &__product-price {
+    // flex: 2;
+    text-align: right;
+    padding: 16px 0;
+  }
+
+  &__product-price-table {
+    width: 100%;
+  }
+
+  &__product-price-input {
+    // width: 40px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px dashed #aaa;
+    text-align: right;
+    font-size: 16px;
+  }
+
+  &__delete {
+    // width: 16px;
+    padding: 8px 16px;
+    border-left: 1px solid #ccc;
+    cursor: pointer;
+  }
+}
+
+.total {
+  border: 1px solid #007BBB;
+  margin-top: 16px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  gap: 0;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 0 16px rgb(0 0 0 / .1);
+
+  &__title {
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    color: #007BBB;
+    font-weight: bold;
+  }
+
+  &__result {
+    flex: 1.5;
+    background: rgb(0,123,187);
+    background: linear-gradient(-135deg, rgba(0,123,187,1) 0%, rgba(0,165,187,1) 100%);
+    padding: 16px;
+  }
+}
+
+.result-table {
+  // width: 100%;
+  text-align: right;
+  margin-left: auto;
+  margin-right: 0;
+
+  &__td {
+    color: #fff;
+    width: 1px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  &__td--large {
+    font-size: 22px;
+  }
+
+  &__td:nth-last-of-type(1) {
+    padding-left: 8px;
+  }
+}
+
+.product-input {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.btn-input-product {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgb(0,123,187);
+  background: linear-gradient(-135deg, rgba(0,123,187,1) 0%, rgba(0,165,187,1) 100%);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgb(0 0 0 / .1);
+  
+  & i::before {
+    color: #fff;
+    font-size: 18px;
+
+  }
+}
+
+.input-product-name {
+  flex: 1;
+  width: 1px;
+  background: #eee;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 16px;
+}
+
+.input-product-price {
+  flex: 1;
+  width: 1px;
+  background: #eee;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 16px;
 }

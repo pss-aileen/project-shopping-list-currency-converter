@@ -7,6 +7,10 @@ textarea {
   color: #333;
 }
 
+img {
+  vertical-align: bottom;
+}
+
 .all-wrapper {
   max-width: 320px;
   margin: 48px auto;
@@ -24,45 +28,42 @@ body {
 
 .pick-currency {
   padding: 0;
-  position: relative;
-  height: 70px;
-  border: 1px solid red;
-  // border: none;
+  // border: 1px solid red;
   overflow: hidden;
 
   &:has(.checked) &__label{
     border: none;
   }
 
-  &.is-expand {
-    position: static;
-    height: 400px;
-    overflow-y: scroll;
-  }
-
-  &.is-expand &__label {
-    position: static;
+  .fi.fis {
+    width: 24px;
+    // height: 48px;
+    aspect-ratio: 1;
+    display: block;
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    border: 1px solid #eee;
   }
 
   &__label {
-    display: block;
+    display: flex;
     // background: #f8f8f8;
     padding: 8px;
-    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    background: #eee;
+    gap: 8px;
+    align-items: center;
   }
 
-  &__label:has(&__input:checked)
-  {
-    background: #fff;
+  &__info-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
   }
 
-  &__label.checked {
-    z-index: 999;
-  }
 
   &__label + &__label {
     border-top: 1px solid #ccc;
@@ -72,16 +73,14 @@ body {
     display: none;
   }
 
-
   &__code {
     display: block;
-    text-align: right;
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: bold;
   }
   
   &__description {
     display: block;
-    text-align: right;
     font-size: 12px;
     color: #999;
   }
