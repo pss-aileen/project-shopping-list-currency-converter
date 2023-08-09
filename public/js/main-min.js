@@ -1,1 +1,1 @@
-"use strict";
+"use strict";{async function callSymbolsApi(){try{const o=await fetch("https://api.exchangerate.host/symbols");if(!o.ok)throw new Error(`HTTPS error: ${o.status}`);return o.json()}catch(o){console.error(`Could not get products: ${o}`)}}function countryCodes(o){}callSymbolsApi().then(o=>{for(const[s,t]of Object.entries(o))console.log(`${s}: ${t}`);console.log(Object.values(o)),console.log(Object.values(o.symbols));const s=Object.values(o.symbols);for(let o=0;o<s.length;o++)console.log(s[o].code),console.log(s[o].description)})}
