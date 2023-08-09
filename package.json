@@ -18,6 +18,5 @@
     "sass": "^1.64.1"
   },
   "dependencies": {
-    "flag-icons": "^6.9.3"
   }
 }
