@@ -1,92 +1,25 @@
-*,
-*::before,
-*::after,
-input,
-textarea {
-  box-sizing: border-box;
+@use "./_variables.scss" as v;
+@use "./_reset.scss";
+@use "./_common_parts.scss";
+@use "./_header.scss";
+@use "./_set_currency.scss";
+@use "./_shopping_list.scss";
+@use "./_country_lists_modal.scss";
+@use "./_footer.scss";
+
+@media print {
+  * {
+    color: #333 !important;
+    background: #fff !important;
+  }
 }
 
+/*/////////////////////////////////////
+  all
+*//////////////////////////////////////
+
 .all-wrapper {
-  max-width: 600px;
+  max-width: 320px;
   margin: 48px auto;
 }
 
-
-body {
-  // font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  // font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-  font-family: Dejavu Sans, Arial, Verdana, sans-serif;
-  background: #f8f8f8;
-}
-
-.setting-table {
-  width: 100%;
-  background: #f8f8f8;
-
-  &__tr {
-
-  }
-
-  &__th,
-  &__td {
-    padding: 8px;
-  }
-
-  &__th {
-  }
-
-  &__td {
-
-  }
-
-}
-
-.currency-pulldown {
-  width: 100%;
-  padding: 8px;
-}
-
-.products-list-table {
-  width: 100%;
-  border-collapse: collapse;
-
-  &__tr {
-
-  }
-
-  &__th,
-  &__td {
-    padding: 8px;
-    border: 1px solid;
-  }
-
-  &__th {
-    text-align: center;
-    background: #eee;
-  }
-
-  &__td:nth-child(1) {
-    width: 30%;
-  }
-
-  &__td:nth-child(2) {
-    width: 30%;
-  }
-
-  &__td:nth-child(3) {
-    width: 30%;
-  }
-
-  &__td:nth-child(4) {
-    width: 32px;
-    text-align: center;
-  }
-
-  &__td {
-
-  }
-
-  &__input {
-    width: 100%;
-  }
-}

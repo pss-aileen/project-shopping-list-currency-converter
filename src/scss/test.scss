@@ -1,3 +1,88 @@
+*,
+*::before,
+*::after,
+input,
+textarea {
+  box-sizing: border-box;
+  color: #333;
+}
+
+img {
+  vertical-align: bottom;
+}
+
+.all-wrapper {
+  max-width: 320px;
+  margin: 48px auto;
+}
+
+h1 {
+  font-size: 20px;
+}
+
 body {
-  background: cornsilk;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: #333;
+}
+
+.pick-currency {
+  padding: 0;
+  // border: 1px solid red;
+  overflow: hidden;
+
+  &:has(.checked) &__label{
+    border: none;
+  }
+
+  .fi.fis {
+    width: 24px;
+    // height: 48px;
+    aspect-ratio: 1;
+    display: block;
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    border: 1px solid #eee;
+  }
+
+  &__label {
+    display: flex;
+    // background: #f8f8f8;
+    padding: 8px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__info-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+
+  &__label + &__label {
+    border-top: 1px solid #ccc;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__code {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  &__description {
+    display: block;
+    font-size: 12px;
+    color: #999;
+  }
+
 }
