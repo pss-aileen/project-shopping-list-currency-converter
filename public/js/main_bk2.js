@@ -11,7 +11,7 @@ let globalTo = "";
 const promise = CallSymbolsApi();
 promise
 .then((data) =>
-Object.keys(data["symbols"])
+  Object.keys(data["symbols"])
 )
 .then((data) => {
     const from = document.getElementById('from')
