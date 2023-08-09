@@ -1,0 +1,15 @@
+@use "./_variables.scss" as v;
+
+/*/////////////////////////////////////
+  header
+*//////////////////////////////////////
+
+.site-title {
+  color: v.$primary-blue;
+}
+
+.site-lead {
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+}
