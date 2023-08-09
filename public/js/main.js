@@ -30,20 +30,20 @@
       for (const [s, d] of Object.entries(data)) {
         console.log(`${s}: ${d}`);
       }
-
-      console.log(Object.values(data));
-      console.log(Object.values(data["symbols"]));
-      const test = Object.values(data["symbols"]);
-
-      for (let i = 0; i < test.length; i++) {
-        console.log(test[i].code);
-        console.log(test[i].description);
-      }
+      data = Object.values(data["symbols"]);
+      // symbolsとdescriptionの配列、オブジェクトがかえる
+      console.log(data);
     });
 
   function countryCodes(data) {
     const array = [];
-    
+    const test = Object.values(data["symbols"]);
+
+    const countrySet = new Object();
+    countrySet.code = "tiwatiwa";
+    countrySet.description = "tiwatiwa2";
+
+    console.log(array);
   }
 
 
