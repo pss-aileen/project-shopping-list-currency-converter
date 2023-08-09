@@ -20,6 +20,56 @@
       <p class="site-lead">This app helps to manage your travel budget.</p>
     </header>
 
+    <section class="country-lists-modal">
+      <div class="country-lists-modal__inner">
+        <div class="country-search">
+          <input type="text" class="country-search__input">
+          <i class="bi bi-search country-search__icon"></i>
+        </div>
+        
+        <ul class="country-lists">
+          <li class="country-lists__item">
+            <label class="country">
+              <input type="radio" class="country__input-radio">
+              <div class="country__flag-wrapper">
+                <span class="fi fi-jp fis country__flag"></span>
+              </div>
+              <div class="country__text-wrapper">
+                <span class="country__code">JPY</span>
+                <span class="country__description">Japanese Yen</span>
+              </div>
+            </label>
+          </li>
+          <li class="country-lists__item">
+            <label class="country">
+              <input type="radio" class="country__input-radio">
+              <div class="country__flag-wrapper">
+                <span class="fi fi-my fis country__flag"></span>
+              </div>
+              <div class="country__text-wrapper">
+                <span class="country__code">MYR</span>
+                <span class="country__description">Malaysia Ringgit</span>
+              </div>
+            </label>
+          </li>
+          <li class="country-lists__item">
+            <label class="country">
+              <input type="radio" class="country__input-radio">
+              <div class="country__flag-wrapper">
+                <span class="fi fi-mr fis country__flag"></span>
+              </div>
+              <div class="country__text-wrapper">
+                <span class="country__code">MRY</span>
+                <span class="country__description">Myannmer Ringgit</span>
+              </div>
+            </label>
+          </li>
+        </ul>
+
+
+      </div><!--country-lists__inner-->
+    </section>
+
     <main class="main">
       <section class="set-currency-section">
         <div class="set-value">
@@ -34,7 +84,7 @@
           </div>
         </div>
         <div class="set-value__swaiper">
-          ↔︎
+          <i class="bi bi-arrow-left-right"></i>
         </div>
         <div class="set-value">
           <div class="set-value__country-flag-wrapper">
@@ -53,26 +103,42 @@
         1 JPY = 30 MYR
       </section>
 
-      <button id="save-currency" class="btn">SAVE CURRENCY</button>
+      <button id="btn-save-currency" class="btn btn--normal">SAVE CURRENCY</button>
 
       <hr class="horizontal-rule">
       
       <section class="shopping-list-section">
-        <h2>Shopping List</h2>
+        <h2 class="content-heading">Shopping List</h2>
 
         <div class="shopping-lists">
-          <div class="shopping-list">
-            <div class="shopping-list__product-name">
-              <textarea class="shopping-list__product-name-input" rows="1">carrot</textarea>
+          <div class="shopping-list shopping-list--sample">
+            <div class="shopping-list__product-name shopping-list__product-name--sample">
+              <textarea class="shopping-list__product-name-input" rows="1">sample carrot</textarea>
+              <div class="edit-guide edit-guide--product-name">
+                <div class="edit-guide__inner">
+                  <div class="edit-guide__arrow"></div>
+                  <div class="edit-guide__text">
+                    click & edit
+                  </div>
+                </div>
+              </div><!--/edit-guide-->
             </div>
-            <div class="shopping-list__product-price">
+            <div class="shopping-list__product-price shopping-list__product-price--sample">
+              <div class="edit-guide edit-guide--product-price">
+                <div class="edit-guide__inner">
+                  <div class="edit-guide__arrow"></div>
+                  <div class="edit-guide__text">
+                    click & edit
+                  </div>
+                </div>
+              </div><!--/edit-guide-->
               <table class="shopping-list__product-price-table">
                 <tr>
                   <td><input type="text" value="100" class="shopping-list__product-price-input"></td>
                   <td>JPY</td>
                 </tr>
                 <tr>
-                  <td>3000</td>
+                  <td>3.5</td>
                   <td>MYR</td>
                 </tr>
               </table>
@@ -81,47 +147,7 @@
               <i class="bi bi-x-lg"></i>
             </div>
           </div>
-          <div class="shopping-list">
-            <div class="shopping-list__product-name">
-              <textarea class="shopping-list__product-name-input" rows="1">carrot</textarea>
-            </div>
-            <div class="shopping-list__product-price">
-              <table class="shopping-list__product-price-table">
-                <tr>
-                  <td><input type="text" value="100" class="shopping-list__product-price-input"></td>
-                  <td>JPY</td>
-                </tr>
-                <tr>
-                  <td>3000</td>
-                  <td>MYR</td>
-                </tr>
-              </table>
-            </div>
-            <div class="shopping-list__delete">
-              <i class="bi bi-x-lg"></i>
-            </div>
-          </div>
-          <div class="shopping-list">
-            <div class="shopping-list__product-name">
-              <textarea class="shopping-list__product-name-input" rows="1">carrot</textarea>
-            </div>
-            <div class="shopping-list__product-price">
-              <table class="shopping-list__product-price-table">
-                <tr>
-                  <td><input type="text" value="100" class="shopping-list__product-price-input"></td>
-                  <td>JPY</td>
-                </tr>
-                <tr>
-                  <td>3000</td>
-                  <td>MYR</td>
-                </tr>
-              </table>
-            </div>
-            <div class="shopping-list__delete">
-              <i class="bi bi-x-lg"></i>
-            </div>
-          </div>
-        </div>
+        </div><!--/shopping lists-->
 
         <div class="total">
           <div class="total__title">
@@ -135,22 +161,22 @@
                   <td class="result-table__td">JPY</td>
                 </tr>
                 <tr>
-                  <td class="result-table__td result-table__td--large">3000</td>
+                  <td class="result-table__td result-table__td--large">3.5</td>
                   <td class="result-table__td result-table__td--large">MYR</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </section>
+      </section><!--/shopping-list-section-->
 
       <section class="product-input">
         <input type="text" placeholder="product name" class="input-product-name">
         <input type="number" placeholder="product price" class="input-product-price">
-        <button class="btn-input-product"><i class="bi bi-plus-lg"></i></button>
+        <button class="btn btn-input-product"><i class="bi bi-plus-lg"></i></button>
       </section>
 
-      <button id="btn-calculate" class="btn">CALCULATE</button>
+      <button id="btn-calculate" class="btn btn--normal">CALCULATE</button>
 
       <div class="btn-delete-lists-wrapper">
         <button id="btn-delete-lists" class="btn-delete-lists">DELETE LISTS</button>
@@ -158,9 +184,6 @@
     </main>
 
     <footer class="footer">
-      <section>
-
-      </section>
       <small class="copyright">
         &copy; Shopping List Currency Converter
       </small>
