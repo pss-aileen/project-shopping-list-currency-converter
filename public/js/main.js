@@ -21,20 +21,6 @@
     }
   }
 
-  // call json
-
-  async function callJson() {
-    try {
-      const response = await fetch("json/country-currency.json");
-      if (!response.ok) {
-        throw new Error(`HTTPS error: ${response.status}`);
-      }
-      const data = response.json();
-      return data;
-    } catch (error) {
-      console.error(`Could not get products: ${error}`);
-    }
-  }
 
   /////////////////////////////////
   // handle symbols api
@@ -51,80 +37,137 @@
       // symbolsとdescriptionの配列、オブジェクトがかえる
     })
     .then((data) => {
-      const callJsonPromise = callJson();
-      callJsonPromise
-        .then((data2) => {
-          combineArray(data, data2);
-        });
+      showSymbols(data);
+      searchSymbols();
+      setCurrency();
     });
   
   
+  function showSymbols(array) {
+    // console.log(array);
+    // console.log(array[0].code);
+    const output = document.querySelector('.country-lists');
 
-  
- 
+    for (let i = 0; i < array.length; i++) {
+      const li = document.createElement('li');
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      const divCode = document.createElement('div');
+      const divDescription = document.createElement('div');
 
-  
-  
-  function combineArray(data, data2) {
-    console.log(data);
-    console.log(data2);
-    const array = [];
+      output.appendChild(li);
+      li.appendChild(label);
+      label.appendChild(input);
+      label.appendChild(divCode);
+      label.appendChild(divDescription);
 
-    pickCountryName(data, data2);
-    
-    for (let i = 0; i < data.length; i++) {
-      const currencyCode = data[i].code;
-      const currencyCodeName = data[i].description;
-  
-      const line = new Object;
-      line.currencyCode = currencyCode;
-      line.currencyCodeName = currencyCodeName;
-      line.countryName = "";
-      line.countryIcon = "";
+      li.classList.add("country-lists__item");
+      label.classList.add("country");
+      input.classList.add("country__input-radio");
+      divCode.classList.add("country__code");
+      divDescription.classList.add("country__description");
 
-      // currencyCode or CurrencyCodeNameを他のオブジェクトと照らし合わせる
-      // 検索させる
-      // 同じものがあれば、そこの配列から国名をひっこぬいてくる
+      input.setAttribute("type", "radio");
+      input.setAttribute("name", "countries");
 
-      // console.log(line);
+      input.value = array[i].code;
+      divCode.textContent = array[i].code;
+      divDescription.textContent = array[i].description;
+
+      // console.log("created");
     }
   }
 
-  function pickCountryName(data1, data2) {
-    for (let i = 0; i < data1.length; i++) {
-      const countryName = data1[i].code;
-      // console.log(countryName);
-      for (let j = 0; j < data2.length; j++) {
-        const countryNameMatch = data2[j].currency_code;
-        if (countryName === countryNameMatch) {
-          const countrydata = data2[j].country;
-          // console.log(countrydata + i + ":" + + j);
-          console.log(`${i} ${data1[i].code} ${data1[i].description} ${j} ${data2[j].currency_code} ${data2[j].country}`);
-          // console.log(j);
+  function searchSymbols() {
+    const input = document.querySelector(".country-search__input");
+    const dataArray = document.querySelectorAll(".country-lists .country__input-radio");
+    // 余裕があればフルネームで検索できるようにしたい、一旦保留
+    // 検索
+    input.addEventListener('input', () => {
+      const data = input.value;
+      const regex = new RegExp(data, "i");
+      console.log(`input: ${regex}`);
+
+      for (let i = 0; i < dataArray.length; i++) {
+        if (regex.test(dataArray[i].value)) {
+          // console.log("matach");
+          // console.log(dataArray[i].value);
+          dataArray[i].classList.remove('is_displayNone');
+        } else {
+          dataArray[i].classList.add('is_displayNone');
         }
       }
-    }
 
-
-  }
-
-  function pickCountryFlag() {
-
+    });
   }
 
 
+  function setCurrency() {
+    const btnFrom = document.querySelector("#btn-set-from");
+    const btnTo = document.querySelector("#btn-set-to");
+    console.log(btnFrom);
+    const modal = document.querySelector('.country-lists-modal');
 
+    btnFrom.addEventListener('click', () => {
+      modal.classList.add('is_show');
+      pickUpAndSet("from");
+    })
+
+    btnTo.addEventListener('click', () => {
+      modal.classList.add('is_show');
+      pickUpAndSet("to");
+    })
+    
+
+  }
+
+  function pickUpAndSet(place) {
+    const modal = document.querySelector('.country-lists-modal');
+    const countries = document.querySelectorAll("input[name='countries']");
+
+    // console.log(countries);
+
+    const targetFrom = document.getElementById('from-currency');
+    const targetTo = document.getElementById('to-currency');
+
+    countries.forEach(country => {
+      country.addEventListener('click', () => {
+        country.checked = false;
+        if (place === "from") {
+          modal.classList.remove('is_show');
+          return targetFrom.textContent = country.value;
+          // console.log("fromまわってる");
+        } else if (place === "to") {
+          modal.classList.remove('is_show');
+          return targetTo.textContent = country.value;
+          // console.log("toまわってる");
+        }
+      })
+    });
+
+    // values.forEach(value => {
+    //   value.addEventListener('click', () => {
+    //     modal.classList.remove('is_show');
+    //     console.log(`target: ${target.textContent}`);
+    //     console.log(value.ariaChecked);
+    //     target.textContent = value.value;
+    //     // console.log("naze");
+    //   })
+    // });
+
+    console.log("-----");
+  }
   
-
   // シンボル一覧を1つ生成する
   // from をクリックして、選んだら、そこに値を入れる
   // to をクリックして、選んだら、checkedされた値をそこに入れる
   // 国名と対応した国旗を出力させる、なければそれを出力する機能もつける
 
-  // カーレンシーの略と、国をリンクさせる
-  // 国とアイコン表示用の省略語をリンクさせる
-  // countryArray = [{ countryName: "COUNTRY NAME", currencyCode: "CDE", countryIcon: "am"}]; みたいな
-  // これを別フォルダで生成して保存しておいて、ここから情報をとってきて、APIにつっこむ
+
+  
+ 
+
+
 
 
 } // end
