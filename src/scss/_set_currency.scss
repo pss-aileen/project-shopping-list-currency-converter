@@ -13,19 +13,12 @@
 }
 
 .set-value {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 8px 8px 8px;
+  padding: 16px;
   box-shadow: 0 0 16px rgb(0 0 0 / .1);
   border-radius: 8px;
   flex: 1;
-  justify-content: space-between;
   border: 1px solid #eee;
-
-  &__country-flag {
-    @extend %country-flag-icon;
-  }
+  position: relative;
 
   &__swaiper {
     width: 32px;
@@ -35,11 +28,15 @@
   }
 
   &__currency {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   &__btn-down {
     cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
   }
 }
 
