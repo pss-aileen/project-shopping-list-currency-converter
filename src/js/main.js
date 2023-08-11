@@ -130,20 +130,48 @@
     const targetFrom = document.getElementById('from-currency');
     const targetTo = document.getElementById('to-currency');
 
-    countries.forEach(country => {
-      country.addEventListener('click', () => {
-        country.checked = false;
+
+    for (let i = 0; i < countries.length; i++) {
+      countries[i].addEventListener('click', () => {
+        console.log(countries[i]);
         if (place === "from") {
+          console.log("from" + i);
           modal.classList.remove('is_show');
-          return targetFrom.textContent = country.value;
-          // console.log("fromまわってる");
         } else if (place === "to") {
+          console.log("to" + i);
           modal.classList.remove('is_show');
-          return targetTo.textContent = country.value;
-          // console.log("toまわってる");
         }
       })
-    });
+    }
+
+  //   countries.forEach((country, index) => {
+  //     country.addEventListener('click', () => {
+  //       console.log(country);
+  //       if (place === "from") {
+  //         console.log("from" + index);
+  //         modal.classList.remove('is_show');
+  //       } else if (place === "to") {
+  //         console.log("to" + index);
+  //         modal.classList.remove('is_show');
+  //       }
+  //     })
+  //  });
+
+    // countries.forEach((country, index) => {
+    //   country.addEventListener('click', () => {
+    //     console.log(index);
+    //     country.checked = false;
+    //     if (place === "from") {
+    //       c
+    //       targetFrom.textContent = country.value;
+    //       console.log("fromまわってる");
+    //     } else if (place === "to") {
+    //       modal.classList.remove('is_show');
+    //       targetTo.textContent = country.value;
+    //       console.log("toまわってる");
+    //     }
+    //   })
+    // });
 
     // values.forEach(value => {
     //   value.addEventListener('click', () => {
