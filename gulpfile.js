@@ -16,7 +16,12 @@ function watch() {
 
 function style() {
   return gulp.src('./src/scss/**/*.scss')
-    .pipe(sass.sync({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(sass({
+      includePaths: ['node_modules']
+    }))
+    .pipe(sass.sync({
+      outputStyle: 'compressed'
+    }).on('error', sass.logError))
     .pipe(gulp.dest('./public/css'))
     .pipe(browserSync.stream());
 }
@@ -28,7 +33,16 @@ function js() {
     .pipe(browserSync.stream());
 };
 
+function test() {
+  return gulp.src('./src/scss/**/*.scss')
+    .pipe(sass({
+      includePaths: ['node_modules']
+    }))
+    .pipe(gulp.dest('./public/css'));
+}
+
 
 exports.watch = watch;
 exports.style = style;
 exports.js = js;
+exports.test = test;
