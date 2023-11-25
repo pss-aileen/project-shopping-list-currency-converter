@@ -17,10 +17,12 @@
   &__inner {
     max-width: 320px;
     margin: 0 auto;
-    // border-left: 1px solid #ccc;
-    // border-right: 1px solid #ccc;
     height: 100vh;
     padding-top: 16px;
+  }
+
+  &.is_show {
+    display: block;
   }
 }
 
@@ -55,10 +57,17 @@
   padding: 0;
   list-style: none;
   border-top: 1px solid #ccc;
+  // 76
+  height: calc(100vh - 76px);
+  overflow-y: scroll;
 
   &__item {
     margin: 0;
     padding: 0;
+  }
+
+  &__item:has(.is_displayNone) {
+    display: none;
   }
 
   &__item + &__item {
@@ -68,34 +77,22 @@
 
 .country {
   display: flex;
-  padding: 8px 16px;
-  gap: 16px;
+  padding: 8px 24px;
+  // gap: 16px;
   cursor: pointer;
+  align-items: center;
 
   &:hover {
     background: #eee;
   }
 
   &__input-radio {
-    display: none;
-  }
-
-  &__flag-wrapper {
-
-  }
-
-  &__flag {
-    @extend %country-flag-icon;
-  }
-
-  &__text-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    // display: none;
   }
 
   &__code {
     font-size: 18px;
+    width: 64px;
   }
 
   &__description {

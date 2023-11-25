@@ -4,12 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shppping List Currency Converter - this app support your travel with money?</title>
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.9.2/css/flag-icons.min.css"
-/>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -26,60 +21,23 @@
           <input type="text" class="country-search__input">
           <i class="bi bi-search country-search__icon"></i>
         </div>
-        
-        <ul class="country-lists">
+        <fieldset class="country-lists">
           <li class="country-lists__item">
             <label class="country">
-              <input type="radio" class="country__input-radio">
-              <div class="country__flag-wrapper">
-                <span class="fi fi-jp fis country__flag"></span>
-              </div>
-              <div class="country__text-wrapper">
-                <span class="country__code">JPY</span>
-                <span class="country__description">Japanese Yen</span>
-              </div>
+              <input class="country__input-radio" type="radio" name="countries" value="TEST">
+              <div class="country__code">TEST</div>
+              <div class="country__description">TEST</div>
             </label>
           </li>
-          <li class="country-lists__item">
-            <label class="country">
-              <input type="radio" class="country__input-radio">
-              <div class="country__flag-wrapper">
-                <span class="fi fi-my fis country__flag"></span>
-              </div>
-              <div class="country__text-wrapper">
-                <span class="country__code">MYR</span>
-                <span class="country__description">Malaysia Ringgit</span>
-              </div>
-            </label>
-          </li>
-          <li class="country-lists__item">
-            <label class="country">
-              <input type="radio" class="country__input-radio">
-              <div class="country__flag-wrapper">
-                <span class="fi fi-mr fis country__flag"></span>
-              </div>
-              <div class="country__text-wrapper">
-                <span class="country__code">MRY</span>
-                <span class="country__description">Myannmer Ringgit</span>
-              </div>
-            </label>
-          </li>
-        </ul>
-
-
-      </div><!--country-lists__inner-->
+        </fieldset>
+      </div>
     </section>
 
     <main class="main">
       <section class="set-currency-section">
         <div class="set-value">
-          <div class="set-value__country-flag-wrapper">
-            <span class="fi fi-jp fis set-value__country-flag"></span>
-          </div>
-          <div class="set-value__currency">
-            JPY
-          </div>
-          <div class="set-value__btn-down">
+          <div class="set-value__currency" id="from-currency">JPY</div>
+          <div class="set-value__btn-down" id="btn-set-from">
             <i class="bi bi-chevron-down"></i>
           </div>
         </div>
@@ -87,13 +45,8 @@
           <i class="bi bi-arrow-left-right"></i>
         </div>
         <div class="set-value">
-          <div class="set-value__country-flag-wrapper">
-            <span class="fi fi-my fis set-value__country-flag"></span>
-          </div>
-          <div class="set-value__currency">
-            MYR
-          </div>
-          <div class="set-value__btn-down">
+          <div class="set-value__currency" id="to-currency">MYR</div>
+          <div class="set-value__btn-down" id="btn-set-to">
             <i class="bi bi-chevron-down"></i>
           </div>
         </div>
