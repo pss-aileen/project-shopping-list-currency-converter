@@ -1,1 +1,0 @@
-export default async function CallRateApi(o){console.log(o);try{const t=await fetch(o);if(!t.ok)throw new Error(`HTTPS error: ${t.status}`);return t.json()}catch(o){console.error(`Could not get products: ${o}`)}}export{CallRateApi};
