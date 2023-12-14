@@ -1,1 +1,0 @@
-export default async function CallSymbolsApi(){try{const t=await fetch("https://api.exchangerate.host/symbols");if(!t.ok)throw new Error(`HTTPS error: ${t.status}`);return t.json()}catch(t){console.error(`Could not get products: ${t}`)}}export{CallSymbolsApi};
