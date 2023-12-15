@@ -2,7 +2,8 @@
 {
 
 
-  class getCountrys {
+  // 国を取得して、それぞれで実行する
+  class Countries {
     constructor(fromCountry, toCountry) {
       this.fromCountry = fromCountry;
       this.toCountry = toCountry;
@@ -15,28 +16,37 @@
     getToCountryString() {
       return this.toCountry;
     }
-    
-    getRate() {
-      fetchData(this.getApiUrl());
-      async function fetchData(URL) {
-        try {
-          const response = await fetch(URL);
-    
-          if (!response.ok) {
-            throw new Error("HTTP ERROR Status:", response.status);
+
+    async getRate() {
+      return new Promise(resolve => {
+        async function fetchData(URL, country) {
+          try {
+            console.log(URL, country);
+            const response = await fetch(URL);
+            if (!response.ok) {
+              throw new Error("HTTP ERROR Status:", response.status);
+            }
+  
+            const data = await response.json();
+            // console.log("API Response", data);
+            const rate = await data.rates[country];
+            console.log(rate);
+            return rate;
+          } catch (error) {
+            console.error("Error fetching data:", error.message);
           }
-          
-          const data = await response.json();
-          console.log("API Response", data);
-          console.log(`data.rates.${this.fromCountry}`);
-        } catch (error) {
-          console.error("Error fetching data:", error.message);
         }
-      }
+        resolve(fetchData(this.getApiUrl(), this.toCountry));
+      });
     }
+
   }
 
+
+  // 初期ロード時、selectを作る
   const apiUrl = "https://open.er-api.com/v6/latest/AED";
+
+  fetchData();
 
   async function fetchData() {
     try {
@@ -49,36 +59,16 @@
       const data = await response.json();
       console.log("API Response", data);
       // console.log("TEST", data.base_code, "USD", data.rates.USD);
-      // console.log(data.rates);
-      // console.log(data.rates);
       // console.log(Object.keys(data.rates));
-      // console.log(Object.keys(data.rates)[0]);
-      // console.log(Object.keys(data.rates)[1]);
-
       showCountrys(data);
-      getValue();
+      // getValue();
+
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }
   }
 
-  fetchData();
-
-  // async function fetchData2(URL) {
-  //   try {
-  //     const response = await fetch(URL);
-
-  //     if (!response.ok) {
-  //       throw new Error("HTTP ERROR Status:", response.status);
-  //     }
-      
-  //     const data = await response.json();
-  //     console.log("API Response", data);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error.message);
-  //   }
-  // }
-  
+ 
   function showCountrys(data) {
     const array = Object.keys(data.rates);
 
@@ -88,37 +78,44 @@
     for (let i = 0; i < array.length; i++) {
       const option = document.createElement("option");
       option.textContent = Object.keys(data.rates)[i];
+      if (Object.keys(data.rates)[i] === "JPY") {
+      // if (i === 0) {
+        option.selected = true;
+      }
       from.appendChild(option);
     }
 
     for (let i = 0; i < array.length; i++) {
       const option = document.createElement("option");
       option.textContent = Object.keys(data.rates)[i];
+      // if (i === 0) {
+      if (Object.keys(data.rates)[i] === "MYR") {
+        option.selected = true;
+      }
       to.appendChild(option);
     }
   }
 
-  function getValue() {
-    const from = document.getElementById("from");
-    from.addEventListener("change", () => {
-      console.log(from.value);
-      // makeURL(from.value);
-      fetchData2(makeURL(from.value));
-    });
-    const to = document.getElementById("to");
-    to.addEventListener("change", () => {
-      console.log(to.value);
-    });
-  }
 
-  function makeURL(from) {
-    console.log(`https://open.er-api.com/v6/latest/${from}`);
-    return `https://open.er-api.com/v6/latest/${from}`;
-  }
+  const from = document.getElementById("from");
+  const to = document.getElementById("to");
 
-  function getCurrency(to) {
-    const country = to;
+  // const initData = new Countries(from.value, to.value);
+  // console.log(initData, initData.getRate());
 
-  }
+  from.addEventListener("input", async () => {
+    // console.log(from.value);
+    const fromData = new Countries(from.value, to.value);
+    const rate = await fromData.getRate();
+    console.log(fromData.fromCountry, fromData.getApiUrl(), fromData.getToCountryString(), rate);
+  });
+
+  to.addEventListener("input", async () => {
+    const toData = new Countries(from.value, to.value);
+    const rate = await toData.getRate();
+    console.log(toData.fromCountry, toData.getApiUrl(), toData.getToCountryString(), rate);
+  });
+  
+
 
 }
