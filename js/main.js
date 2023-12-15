@@ -1,7 +1,6 @@
 'use strict';
 {
 
-
   // 国を取得して、それぞれで実行する
   class Countries {
     constructor(fromCountry, toCountry) {
@@ -25,7 +24,7 @@
       return new Promise(resolve => {
         async function fetchData(URL, country) {
           try {
-            console.log(URL, country);
+            // console.log(URL, country);
             const response = await fetch(URL);
             if (!response.ok) {
               throw new Error("HTTP ERROR Status:", response.status);
@@ -34,7 +33,7 @@
             const data = await response.json();
             // console.log("API Response", data);
             const rate = await data.rates[country];
-            console.log(rate);
+            // console.log(rate);
             return rate;
           } catch (error) {
             console.error("Error fetching data:", error.message);
@@ -48,9 +47,12 @@
       const fromCurrency = document.getElementById("fromCurrency");
       fromCurrency.textContent = this.getFromCountryString();
       const fromValue = document.getElementById("fromValue");
-      console.log(fromValue.value);
+      // console.log(fromValue.value);
       const toValue = document.getElementById("toValue");
-      toValue.textContent = await this.getRate() * fromValue.value;
+      const value = await await this.getRate();
+      // console.log(value.toFixed(4), value, value * 1000, parseInt(value * 1000), parseInt(value * 1000) / 1000, parseInt(value * 1000) / 1000 * fromValue.value);
+      toValue.textContent = (value * fromValue.value).toFixed(4);
+
       const toCurrency = document.getElementById("toCurrency");
       toCurrency.textContent = this.getToCountryString();
      }
@@ -75,6 +77,7 @@
       // console.log("TEST", data.base_code, "USD", data.rates.USD);
       // console.log(Object.keys(data.rates));
       showCountrys(data);
+      init();
       // getValue();
 
     } catch (error) {
@@ -104,6 +107,7 @@
       option.textContent = Object.keys(data.rates)[i];
       // if (i === 0) {
       if (Object.keys(data.rates)[i] === "MYR") {
+      // if (Object.keys(data.rates)[i] === "USD") {
         option.selected = true;
       }
       to.appendChild(option);
@@ -114,24 +118,39 @@
   const from = document.getElementById("from");
   const to = document.getElementById("to");
 
-  // const initData = new Countries(from.value, to.value);
-  // console.log(initData, initData.getRate());
+  async function init() {
+    const initData = new Countries(from.value, to.value);
+    const initRate = await initData.getRate();
+    initData.showDisplay();
+  }
+
+  const btn = document.getElementById("btn-get-currency");
+
+  // btn.addEventListener("click", async () => {
+  //   const data = new Countries(from.value, to.value);
+  //   const rate = await data.getRate();
+  //   data.showDisplay();
+  // });
 
   from.addEventListener("input", async () => {
-    // console.log(from.value);
-    const fromData = new Countries(from.value, to.value);
-    const rate = await fromData.getRate();
-    console.log(fromData.fromCountry, fromData.getApiUrl(), fromData.getToCountryString(), rate);
-    fromData.showDisplay();
+    const data = new Countries(from.value, to.value);
+    const rate = await data.getRate();
+    data.showDisplay();
+    // console.log(fromData.fromCountry, fromData.getApiUrl(), fromData.getToCountryString(), rate);
   });
 
   to.addEventListener("input", async () => {
-    const toData = new Countries(from.value, to.value);
-    const rate = await toData.getRate();
-    console.log(toData.fromCountry, toData.getApiUrl(), toData.getToCountryString(), rate);
-    toData.showDisplay();
+    const data = new Countries(from.value, to.value);
+    const rate = await data.getRate();
+    data.showDisplay();
+    // console.log(toData.fromCountry, toData.getApiUrl(), toData.getToCountryString(), rate);
   });
   
 
+  document.getElementById("fromValue").addEventListener("change", async () => {
+    const data = new Countries(from.value, to.value);
+    const rate = await data.getRate();
+    data.showDisplay();
+  });
 
 }
