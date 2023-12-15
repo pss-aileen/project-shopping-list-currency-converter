@@ -13,6 +13,10 @@
       return `https://open.er-api.com/v6/latest/${this.fromCountry}`;
     }
 
+    getFromCountryString() {
+      return this.fromCountry;
+    }
+
     getToCountryString() {
       return this.toCountry;
     }
@@ -40,6 +44,16 @@
       });
     }
 
+    async showDisplay() {
+      const fromCurrency = document.getElementById("fromCurrency");
+      fromCurrency.textContent = this.getFromCountryString();
+      const fromValue = document.getElementById("fromValue");
+      console.log(fromValue.value);
+      const toValue = document.getElementById("toValue");
+      toValue.textContent = await this.getRate() * fromValue.value;
+      const toCurrency = document.getElementById("toCurrency");
+      toCurrency.textContent = this.getToCountryString();
+     }
   }
 
 
@@ -108,12 +122,14 @@
     const fromData = new Countries(from.value, to.value);
     const rate = await fromData.getRate();
     console.log(fromData.fromCountry, fromData.getApiUrl(), fromData.getToCountryString(), rate);
+    fromData.showDisplay();
   });
 
   to.addEventListener("input", async () => {
     const toData = new Countries(from.value, to.value);
     const rate = await toData.getRate();
     console.log(toData.fromCountry, toData.getApiUrl(), toData.getToCountryString(), rate);
+    toData.showDisplay();
   });
   
 
