@@ -14,3 +14,10 @@
 
 - https://open.er-api.com/v6/latest/JPY
 - https://www.exchangerate-api.com/docs/free
+
+# メモ
+
+## 定数名、id候補
+- country
+- origin < - > destination
+- local currency, foreign currency

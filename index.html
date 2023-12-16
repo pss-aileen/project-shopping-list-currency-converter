@@ -9,6 +9,7 @@
 
 <body>
 
+
   <select id="from">
   </select>
 
@@ -16,8 +17,11 @@
   </select>
 
   <p>
-    <input type="number" id="fromValue" value="1"> <span id="fromCurrency"></span> は
-    <span id="toValue"></span> <span id="toCurrency"></span>
+    <input type="number" value="1" min="0" id="local-price">
+    <span id="local-currency"></span>
+    は
+    <span id="foreign-price"></span>
+    <span id="foreign-currency"></span>
   </p>
 
   <!-- <button id="btn-get-currency">レートをチェック</button> -->

@@ -3,21 +3,21 @@
 
   // 国を取得して、それぞれで実行する
   class Countries {
-    constructor(fromCountry, toCountry) {
-      this.fromCountry = fromCountry;
-      this.toCountry = toCountry;
+    constructor(localCurrency, foreignCurrency) {
+      this.localCurrency = localCurrency;
+      this.foreignCurrency = foreignCurrency;
     }
 
     getApiUrl() {
-      return `https://open.er-api.com/v6/latest/${this.fromCountry}`;
+      return `https://open.er-api.com/v6/latest/${this.localCurrency}`;
     }
 
-    getFromCountryString() {
-      return this.fromCountry;
+    getlocalCurrencyString() {
+      return this.localCurrency;
     }
 
-    getToCountryString() {
-      return this.toCountry;
+    getforeignCurrencyString() {
+      return this.foreignCurrency;
     }
 
     async getRate() {
@@ -39,22 +39,20 @@
             console.error("Error fetching data:", error.message);
           }
         }
-        resolve(fetchData(this.getApiUrl(), this.toCountry));
+        resolve(fetchData(this.getApiUrl(), this.foreignCurrency));
       });
     }
 
     async showDisplay() {
-      const fromCurrency = document.getElementById("fromCurrency");
-      fromCurrency.textContent = this.getFromCountryString();
-      const fromValue = document.getElementById("fromValue");
-      // console.log(fromValue.value);
-      const toValue = document.getElementById("toValue");
+      const localCurrency = document.getElementById("local-currency");
+      localCurrency.textContent = this.getlocalCurrencyString();
+      const localPrice = document.getElementById("local-price");
+      const foreignPrice = document.getElementById("foreign-price");
       const value = await await this.getRate();
-      // console.log(value.toFixed(4), value, value * 1000, parseInt(value * 1000), parseInt(value * 1000) / 1000, parseInt(value * 1000) / 1000 * fromValue.value);
-      toValue.textContent = (value * fromValue.value).toFixed(4);
+      foreignPrice.textContent = (value * localPrice.value).toFixed(4);
 
-      const toCurrency = document.getElementById("toCurrency");
-      toCurrency.textContent = this.getToCountryString();
+      const foreignCurrency = document.getElementById("foreign-currency");
+      foreignCurrency.textContent = this.getforeignCurrencyString();
      }
   }
 
@@ -136,18 +134,16 @@
     const data = new Countries(from.value, to.value);
     const rate = await data.getRate();
     data.showDisplay();
-    // console.log(fromData.fromCountry, fromData.getApiUrl(), fromData.getToCountryString(), rate);
   });
 
   to.addEventListener("input", async () => {
     const data = new Countries(from.value, to.value);
     const rate = await data.getRate();
     data.showDisplay();
-    // console.log(toData.fromCountry, toData.getApiUrl(), toData.getToCountryString(), rate);
   });
   
 
-  document.getElementById("fromValue").addEventListener("change", async () => {
+  document.getElementById("local-price").addEventListener("change", async () => {
     const data = new Countries(from.value, to.value);
     const rate = await data.getRate();
     data.showDisplay();
