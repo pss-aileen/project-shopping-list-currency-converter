@@ -24,16 +24,13 @@
       return new Promise(resolve => {
         async function fetchData(URL, country) {
           try {
-            // console.log(URL, country);
             const response = await fetch(URL);
             if (!response.ok) {
               throw new Error("HTTP ERROR Status:", response.status);
             }
   
             const data = await response.json();
-            // console.log("API Response", data);
             const rate = await data.rates[country];
-            // console.log(rate);
             return rate;
           } catch (error) {
             console.error("Error fetching data:", error.message);
@@ -72,12 +69,8 @@
 
       const data = await response.json();
       console.log("API Response", data);
-      // console.log("TEST", data.base_code, "USD", data.rates.USD);
-      // console.log(Object.keys(data.rates));
       showCountrys(data);
       init();
-      // getValue();
-
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }
@@ -87,8 +80,8 @@
   function showCountrys(data) {
     const array = Object.keys(data.rates);
 
-    const from = document.getElementById("from");
-    const to = document.getElementById("to");
+    const inputLocalCurrency = document.getElementById("input-local-currency");
+    const inputForeignCurrency = document.getElementById("input-foreign-currency");
 
     for (let i = 0; i < array.length; i++) {
       const option = document.createElement("option");
@@ -97,7 +90,7 @@
       // if (i === 0) {
         option.selected = true;
       }
-      from.appendChild(option);
+      inputLocalCurrency.appendChild(option);
     }
 
     for (let i = 0; i < array.length; i++) {
@@ -105,46 +98,39 @@
       option.textContent = Object.keys(data.rates)[i];
       // if (i === 0) {
       if (Object.keys(data.rates)[i] === "MYR") {
-      // if (Object.keys(data.rates)[i] === "USD") {
         option.selected = true;
       }
-      to.appendChild(option);
+      inputForeignCurrency.appendChild(option);
     }
   }
 
 
-  const from = document.getElementById("from");
-  const to = document.getElementById("to");
+  const inputLocalCurrency = document.getElementById("input-local-currency");
+  const inputForeignCurrency = document.getElementById("input-foreign-currency");
 
   async function init() {
-    const initData = new Countries(from.value, to.value);
+    const initData = new Countries(inputLocalCurrency.value, inputForeignCurrency.value);
     const initRate = await initData.getRate();
     initData.showDisplay();
   }
 
   const btn = document.getElementById("btn-get-currency");
 
-  // btn.addEventListener("click", async () => {
-  //   const data = new Countries(from.value, to.value);
-  //   const rate = await data.getRate();
-  //   data.showDisplay();
-  // });
-
-  from.addEventListener("input", async () => {
-    const data = new Countries(from.value, to.value);
+  inputLocalCurrency.addEventListener("input", async () => {
+    const data = new Countries(inputLocalCurrency.value, inputForeignCurrency.value);
     const rate = await data.getRate();
     data.showDisplay();
   });
 
-  to.addEventListener("input", async () => {
-    const data = new Countries(from.value, to.value);
+  inputForeignCurrency.addEventListener("input", async () => {
+    const data = new Countries(inputLocalCurrency.value, inputForeignCurrency.value);
     const rate = await data.getRate();
     data.showDisplay();
   });
   
 
   document.getElementById("local-price").addEventListener("change", async () => {
-    const data = new Countries(from.value, to.value);
+    const data = new Countries(inputLocalCurrency.value, inputForeignCurrency.value);
     const rate = await data.getRate();
     data.showDisplay();
   });
