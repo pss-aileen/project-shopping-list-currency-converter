@@ -1,0 +1,21 @@
+{
+  "currencySetting": [
+    {
+      "localCurrency": "MYR",
+      "ForeignCurrency": "JPY",
+      "rate": 0.3027
+    }
+  ],
+  "shoppingList": [
+    {
+      "id": 1,
+      "productName": "にんじん",
+      "localPrice": 3.6
+    },
+    {
+      "id": 2,
+      "productName": "キャベツ",
+      "localPrice": 5.9
+    }
+  ]
+}

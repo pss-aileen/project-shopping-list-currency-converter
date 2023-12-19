@@ -1,11 +1,41 @@
+.wrapper {
+  max-width: 400px;
+  margin: 40px auto;
+}
+
+input {
+  padding: 4px;
+  font-size: 18px;
+}
+
+select {
+  font-size: 18px;
+  padding: 4px;
+}
+
 .shopping-list {
   width: 100%;
+  border: 1px solid;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 8px;
+    border: 1px solid;
+  }
 
   th {
     background: #eee;
   }
 
-  th {
-    width: calc(100% / 3);
+  th:nth-child(1) {
+    width: calc(100% / 2);
   }
+
+  th:nth-child(2),
+  th:nth-child(3) {
+    width: calc((100% / 2) - (50% / 2));
+    text-align: right;
+  }
+
 }
