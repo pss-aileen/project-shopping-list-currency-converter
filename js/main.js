@@ -1,8 +1,7 @@
 'use strict';
 {
 
-  // 国を取得して、それぞれで実行する
-  class Countries {
+  class Currency {
     constructor(localCurrency, foreignCurrency) {
       this.localCurrency = localCurrency;
       this.foreignCurrency = foreignCurrency;
@@ -12,54 +11,50 @@
       return `https://open.er-api.com/v6/latest/${this.localCurrency}`;
     }
 
-    getlocalCurrencyString() {
+    getLocalCurrencyString() {
       return this.localCurrency;
     }
 
-    getforeignCurrencyString() {
+    getForeignCurrencyString() {
       return this.foreignCurrency;
     }
 
     async getRate() {
-      return new Promise(resolve => {
-        async function fetchData(URL, country) {
-          try {
-            const response = await fetch(URL);
-            if (!response.ok) {
-              throw new Error("HTTP ERROR Status:", response.status);
-            }
-  
-            const data = await response.json();
-            const rate = await data.rates[country];
-            return rate;
-          } catch (error) {
-            console.error("Error fetching data:", error.message);
-          }
+      try {
+        const response = await fetch(this.getApiUrl());
+        if (!response.ok) {
+          throw new Error("HTTP ERROR STATUS", response.status);
         }
-        resolve(fetchData(this.getApiUrl(), this.foreignCurrency));
-      });
+
+        const data = await response.json();
+        return data.rates[this.foreignCurrency];
+      } catch (error) {
+        console.error("EROOR FETCHING DATA", error.message);
+      }
     }
 
-    async showDisplay() {
-      const localCurrency = document.getElementById("local-currency");
-      localCurrency.textContent = this.getlocalCurrencyString();
+    async setValues() {
       const localPrice = document.getElementById("local-price");
+      const localCurrency = document.getElementById("local-currency");
       const foreignPrice = document.getElementById("foreign-price");
-      const value = await await this.getRate();
-      foreignPrice.textContent = (value * localPrice.value).toFixed(4);
-
       const foreignCurrency = document.getElementById("foreign-currency");
-      foreignCurrency.textContent = this.getforeignCurrencyString();
+
+      this.getRate().then(rate => {
+        localCurrency.textContent = this.getLocalCurrencyString();
+        foreignCurrency.textContent = this.getForeignCurrencyString();
+        foreignPrice.textContent = (rate * localPrice.value).toFixed(4);
+      });
      }
   }
+ 
+  
+  const inputLocalCurrency = document.getElementById("input-local-currency");
+  const inputForeignCurrency = document.getElementById("input-foreign-currency");
 
-
-  // 初期ロード時、selectを作る
-  const apiUrl = "https://open.er-api.com/v6/latest/AED";
-
-  fetchData();
-
-  async function fetchData() {
+  fetchInitData();
+  
+  async function fetchInitData() {
+    const apiUrl = "https://open.er-api.com/v6/latest/AED";
     try {
       const response = await fetch(apiUrl);
 
@@ -69,70 +64,34 @@
 
       const data = await response.json();
       console.log("API Response", data);
-      showCountrys(data);
-      init();
+      generateCurrencyOptions(data, inputLocalCurrency, "JPY");
+      generateCurrencyOptions(data, inputForeignCurrency, "MYR");
+      changeValue();
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }
   }
 
+  function generateCurrencyOptions(data, selectElement, selectedCurrencyCode) {
+    const currencyCodes = Object.keys(data.rates);
+
+    for (const code of currencyCodes) {
+      const option = document.createElement("option");
+      option.textContent = code;
+      if (code === selectedCurrencyCode) {
+        option.selected = true;
+      }
+      selectElement.appendChild(option);
+    }
+  }
  
-  function showCountrys(data) {
-    const array = Object.keys(data.rates);
-
-    const inputLocalCurrency = document.getElementById("input-local-currency");
-    const inputForeignCurrency = document.getElementById("input-foreign-currency");
-
-    for (let i = 0; i < array.length; i++) {
-      const option = document.createElement("option");
-      option.textContent = Object.keys(data.rates)[i];
-      if (Object.keys(data.rates)[i] === "JPY") {
-      // if (i === 0) {
-        option.selected = true;
-      }
-      inputLocalCurrency.appendChild(option);
-    }
-
-    for (let i = 0; i < array.length; i++) {
-      const option = document.createElement("option");
-      option.textContent = Object.keys(data.rates)[i];
-      // if (i === 0) {
-      if (Object.keys(data.rates)[i] === "MYR") {
-        option.selected = true;
-      }
-      inputForeignCurrency.appendChild(option);
-    }
+  function changeValue() {
+    const data = new Currency(inputLocalCurrency.value, inputForeignCurrency.value);
+    data.setValues();
   }
 
-
-  const inputLocalCurrency = document.getElementById("input-local-currency");
-  const inputForeignCurrency = document.getElementById("input-foreign-currency");
-
-  async function init() {
-    const initData = new Countries(inputLocalCurrency.value, inputForeignCurrency.value);
-    const initRate = await initData.getRate();
-    initData.showDisplay();
-  }
-
-  const btn = document.getElementById("btn-get-currency");
-
-  inputLocalCurrency.addEventListener("input", async () => {
-    const data = new Countries(inputLocalCurrency.value, inputForeignCurrency.value);
-    const rate = await data.getRate();
-    data.showDisplay();
-  });
-
-  inputForeignCurrency.addEventListener("input", async () => {
-    const data = new Countries(inputLocalCurrency.value, inputForeignCurrency.value);
-    const rate = await data.getRate();
-    data.showDisplay();
-  });
-  
-
-  document.getElementById("local-price").addEventListener("change", async () => {
-    const data = new Countries(inputLocalCurrency.value, inputForeignCurrency.value);
-    const rate = await data.getRate();
-    data.showDisplay();
-  });
+  inputLocalCurrency.addEventListener("input", changeValue);
+  inputForeignCurrency.addEventListener("input", changeValue);
+  document.getElementById("local-price").addEventListener("change", changeValue);
 
 }
