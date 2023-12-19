@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shopping List Currency Converter</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -27,17 +28,36 @@
 
   <p>
   <h2>商品追加</h2>
-  <input type="text" id="new-product">
-  <input type="number" id="new-local-price" min="0">
+  <input type="text" id="new-product" value="test">
+  <input type="number" id="new-local-price" min="0" value="1">
+  <button id="btn-create-shoppping-list-element">追加</button>
   </p>
 
-  <ul id="shopping-list">
+  <!-- <ul id="shopping-list">
     <li>
       <span>商品</span>
       <span>JPY</span>
       <span>MYR</span>
     </li>
-  </ul>
+  </ul> -->
+
+  <table id="shopping-list" class="shopping-list">
+    <thead>
+      <tr>
+        <th>商品</th>
+        <th>MYR</th>
+        <th>JPY</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th id="local-price-amount">合計</th>
+        <th id="foreign-price-amount">合計</th>
+      </tr>
+    </thead>
+    <tbody id="shopping-list-content">
+
+    </tbody>
+  </table>
 
   <script src="js/main.js"></script>
 </body>

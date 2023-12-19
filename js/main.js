@@ -64,8 +64,8 @@
 
       const data = await response.json();
       console.log("API Response", data);
-      generateCurrencyOptions(data, inputLocalCurrency, "JPY");
-      generateCurrencyOptions(data, inputForeignCurrency, "MYR");
+      generateCurrencyOptions(data, inputLocalCurrency, "MYR");
+      generateCurrencyOptions(data, inputForeignCurrency, "JPY");
       changeValue();
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -93,5 +93,62 @@
   inputLocalCurrency.addEventListener("input", changeValue);
   inputForeignCurrency.addEventListener("input", changeValue);
   document.getElementById("local-price").addEventListener("change", changeValue);
+
+
+  class Product {
+    constructor(productName, localPrice, rate) {
+      this.productName = productName;
+      this.localPrice = localPrice;
+      this.rate = rate;
+    }
+
+    getProductNameString() {
+      return this.productName;
+    }
+
+    getProductLocalPriceNumber() {
+      return Number(this.localPrice);
+    }
+
+    getProductForeignPriceNumber() {
+      return (this.rate * Number(this.localPrice)).toFixed(2);
+      // return this.rate * Number(this.localPrice);
+    }
+  }
+
+  const CreateListBtn = document.getElementById("btn-create-shoppping-list-element");
+
+  CreateListBtn.addEventListener("click", () => {
+    const productName = document.getElementById("new-product");
+    const localPrice = document.getElementById("new-local-price");
+
+    const item = new Product(productName.value, localPrice.value, 30.4027);
+    
+    console.log(item.getProductNameString());
+    console.log(item.getProductLocalPriceNumber());
+    console.log(item.getProductForeignPriceNumber());
+
+    const tr = document.createElement("tr");
+    const td01 = document.createElement("td");
+    const td02 = document.createElement("td");
+    const td03 = document.createElement("td");
+
+    td01.textContent = item.getProductNameString();
+    td02.textContent = item.getProductLocalPriceNumber();
+    td03.textContent = item.getProductForeignPriceNumber();
+
+    const shoppingList = document.getElementById("shopping-list-content");
+
+    shoppingList.appendChild(tr);
+    tr.appendChild(td01);
+    tr.appendChild(td02);
+    tr.appendChild(td03);
+
+  });
+
+
+  // function createShoppingListElement(productName, localPrice, rate) {
+
+  // }
 
 }
