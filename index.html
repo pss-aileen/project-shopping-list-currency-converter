@@ -10,54 +10,54 @@
 
 <body>
 
-  <h1>Shopping List Currency Converter</h1>
+  <div class="wrapper">
 
-  <select id="input-local-currency">
-  </select>
+    <h1>Shopping List Currency Converter</h1>
 
-  <select id="input-foreign-currency">
-  </select>
+    <select id="input-local-currency">
+    </select>
 
-  <p>
-    <input type="number" value="1" min="0" id="local-price">
-    <span id="local-currency"></span>
-    は
-    <span id="foreign-price"></span>
-    <span id="foreign-currency"></span>
-  </p>
+    <select id="input-foreign-currency">
+    </select>
 
-  <p>
-  <h2>商品追加</h2>
-  <input type="text" id="new-product" value="test">
-  <input type="number" id="new-local-price" min="0" value="1">
-  <button id="btn-create-shoppping-list-element">追加</button>
-  </p>
+    <p>
+      <input type="number" value="1" min="0" id="local-price">
+      <span id="local-currency"></span>
+      は
+      <span id="foreign-price"></span>
+      <span id="foreign-currency"></span>
+    </p>
 
-  <!-- <ul id="shopping-list">
-    <li>
-      <span>商品</span>
-      <span>JPY</span>
-      <span>MYR</span>
-    </li>
-  </ul> -->
+    <button id="btn-save-currency-setting">設定を保存する</button>
+    <button id="btn-call-currency-setting">設定を呼び出す</button>
 
-  <table id="shopping-list" class="shopping-list">
-    <thead>
-      <tr>
-        <th>商品</th>
-        <th>MYR</th>
-        <th>JPY</th>
-      </tr>
-      <tr>
-        <th></th>
-        <th id="local-price-amount">合計</th>
-        <th id="foreign-price-amount">合計</th>
-      </tr>
-    </thead>
-    <tbody id="shopping-list-content">
+    <p>
+    <h2>商品追加</h2>
+    <input type="text" id="new-product" value="test">
+    <input type="number" id="new-local-price" min="0" value="1">
+    <button id="btn-create-shoppping-list-element">追加</button>
+    </p>
 
-    </tbody>
-  </table>
+
+    <table id="shopping-list" class="shopping-list">
+      <thead>
+        <tr>
+          <th>商品</th>
+          <th>MYR</th>
+          <th>JPY</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th id="local-price-amount">合計</th>
+          <th id="foreign-price-amount">合計</th>
+        </tr>
+      </thead>
+      <tbody id="shopping-list-content">
+
+      </tbody>
+    </table>
+
+  </div><!--/wrapper-->
 
   <script src="js/main.js"></script>
 </body>

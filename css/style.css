@@ -1,9 +1,36 @@
+.wrapper {
+  max-width: 400px;
+  margin: 40px auto;
+}
+
+input {
+  padding: 4px;
+  font-size: 18px;
+}
+
+select {
+  font-size: 18px;
+  padding: 4px;
+}
+
 .shopping-list {
   width: 100%;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+.shopping-list th,
+.shopping-list td {
+  padding: 8px;
+  border: 1px solid;
 }
 .shopping-list th {
   background: #eee;
 }
-.shopping-list th {
-  width: 33.3333333333%;
+.shopping-list th:nth-child(1) {
+  width: 50%;
+}
+.shopping-list th:nth-child(2),
+.shopping-list th:nth-child(3) {
+  width: 25%;
+  text-align: right;
 }/*# sourceMappingURL=style.css.map */

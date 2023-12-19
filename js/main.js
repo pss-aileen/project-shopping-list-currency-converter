@@ -1,6 +1,36 @@
 'use strict';
 {
 
+  /******************************************************
+    グローバル変数
+  ******************************************************/
+  
+  let LOCAL_CURRENCY = "";
+  let FOREIGN_CURRENCY = "";
+  let RATE = "";
+  const shoppingProducts = [];
+
+  /******************************************************
+    ローカルストレージ
+  ******************************************************/
+  
+  function saveOnLocalStorage() {
+    const currencySetting = {
+      "localCurrency": ValuesManager.localCurrency,
+      "ForeignCurrency": ValuesManager.foreignCurrency,
+      "rate": ValuesManager.rate
+    };
+
+    const shoppingList = {
+
+    }
+  }
+
+  /******************************************************
+    class Currency
+    currencyをsetし、関連の値をを呼び出す
+  ******************************************************/
+  
   class Currency {
     constructor(localCurrency, foreignCurrency) {
       this.localCurrency = localCurrency;
@@ -47,6 +77,9 @@
      }
   }
  
+  /******************************************************
+    CURRENCY一覧取得、初期値の設定
+  ******************************************************/
   
   const inputLocalCurrency = document.getElementById("input-local-currency");
   const inputForeignCurrency = document.getElementById("input-foreign-currency");
@@ -90,10 +123,19 @@
     data.setValues();
   }
 
+
+  /******************************************************
+    Currency変更、値を変更した時に発火するイベント
+  ******************************************************/
+  
   inputLocalCurrency.addEventListener("input", changeValue);
   inputForeignCurrency.addEventListener("input", changeValue);
   document.getElementById("local-price").addEventListener("change", changeValue);
 
+
+  /******************************************************
+    Shopping List
+  ******************************************************/
 
   class Product {
     constructor(productName, localPrice, rate) {
@@ -116,6 +158,10 @@
     }
   }
 
+  /******************************************************
+    Shopping List追加
+  ******************************************************/
+  
   const CreateListBtn = document.getElementById("btn-create-shoppping-list-element");
 
   CreateListBtn.addEventListener("click", () => {
@@ -124,9 +170,9 @@
 
     const item = new Product(productName.value, localPrice.value, 30.4027);
     
-    console.log(item.getProductNameString());
-    console.log(item.getProductLocalPriceNumber());
-    console.log(item.getProductForeignPriceNumber());
+    // console.log(item.getProductNameString());
+    // console.log(item.getProductLocalPriceNumber());
+    // console.log(item.getProductForeignPriceNumber());
 
     const tr = document.createElement("tr");
     const td01 = document.createElement("td");
@@ -144,11 +190,14 @@
     tr.appendChild(td02);
     tr.appendChild(td03);
 
+    const object = {
+      "productName": item.getProductNameString(),
+      "localPrice": item.getProductLocalPriceNumber()
+    }
+
+    shoppingProducts.push(object);
+    console.log(shoppingProducts);
   });
 
-
-  // function createShoppingListElement(productName, localPrice, rate) {
-
-  // }
 
 }
