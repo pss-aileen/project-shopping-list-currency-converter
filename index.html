@@ -4,11 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Shopping List Currency Converter</title>
 </head>
 
 <body>
 
+  <h1>Shopping List Currency Converter</h1>
 
   <select id="input-local-currency">
   </select>
@@ -24,7 +25,19 @@
     <span id="foreign-currency"></span>
   </p>
 
-  <!-- <button id="btn-get-currency">レートをチェック</button> -->
+  <p>
+  <h2>商品追加</h2>
+  <input type="text" id="new-product">
+  <input type="number" id="new-local-price" min="0">
+  </p>
+
+  <ul id="shopping-list">
+    <li>
+      <span>商品</span>
+      <span>JPY</span>
+      <span>MYR</span>
+    </li>
+  </ul>
 
   <script src="js/main.js"></script>
 </body>
