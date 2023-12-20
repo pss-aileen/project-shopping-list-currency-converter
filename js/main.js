@@ -11,8 +11,39 @@
   const SHOPPING_LISTS = [];
 
   /******************************************************
-    テストで共通化
+    テスト、実験として色々なものは共通化
   ******************************************************/
+  
+  // 小数点を任意の長朝で丸める関数
+  function roundToDecimalPlace(number, decimalPlace) {
+    return number.toFixed(decimalPlace);
+  }
+
+  // foreign priceを計算する関数
+  function calculateForeignPrice(localPrice) {
+    return localPrice * RATE;
+  }
+
+  // 最終的な出力結果はこれにする...？
+  function GET_foreignPrice(localPrice, desimalPlace) {
+    let result = calculateForeignPrice(localPrice);
+    result = roundToDecimalPlace(result, desimalPlace);
+    return result;
+  }
+
+  async function fetchData(URL) {
+    try {
+      const response = await fetch(URL);
+      if (!response.ok) {
+        throw new Error("HTTP ERROR STATUS", response.status);
+      }
+      const data = await response.json();
+      console.log(`URL: ${URL}`, data);
+      return data;
+    } catch (error) {
+      console.error("EROOR FETCHING DATA", error.message);
+    }
+  }
 
   /******************************************************
     initLoad
@@ -25,23 +56,12 @@
     Currency Symbols
   ******************************************************/
   
-  async function fetchSymbol() {
-    try {
-      // const response = await fetch("../json/Common-Currency.json");
-      const response = await fetch("https://gist.githubusercontent.com/ksafranski/2973986/raw/5fda5e87189b066e11c1bf80bbfbecb556cf2cc1/Common-Currency.json");
-      if (!response.ok) {
-        throw new Error("HTTP ERROR STATUS", response.status);
-      }
-
-      const data = await response.json();
-      console.log("DATA", data);
-      // return data.rates[this.foreignCurrency];
-    } catch (error) {
-      console.error("EROOR FETCHING DATA", error.message);
-    }
+  async function GET_CURRENCY_SYMBOL() {
+    const result = await fetchData("https://gist.githubusercontent.com/ksafranski/2973986/raw/5fda5e87189b066e11c1bf80bbfbecb556cf2cc1/Common-Currency.json");
+    console.log(result);
   }
 
-  fetchSymbol();
+  GET_CURRENCY_SYMBOL();
   
 
   /******************************************************
@@ -89,7 +109,6 @@
       FOREIGN_CURRENCY = this.foreignCurrency;
       console.log(`LOCAL_CURRENCY: ${LOCAL_CURRENCY}, FOREIFN_CURRENCY: ${FOREIGN_CURRENCY}`);
     }
-
     
     getApiUrl() {
       return `https://open.er-api.com/v6/latest/${this.localCurrency}`;
@@ -103,28 +122,18 @@
       return this.foreignCurrency;
     }
 
-    async getRate() {
-      try {
-        const response = await fetch(this.getApiUrl());
-        if (!response.ok) {
-          throw new Error("HTTP ERROR STATUS", response.status);
-        }
-
-        const data = await response.json();
-        RATE = data.rates[this.foreignCurrency];
-        console.log("RATE", RATE);
-        return data.rates[this.foreignCurrency];
-      } catch (error) {
-        console.error("EROOR FETCHING DATA", error.message);
-      }
+    async updateRate() {
+      const data = await fetchData(this.getApiUrl());
+      RATE = data.rates[this.foreignCurrency];
+      return data.rates[this.foreignCurrency];
     }
 
     async setValues() {
       const localPrice = document.getElementById("local-price");
       const foreignPrice = document.getElementById("foreign-price");
 
-      this.getRate().then(rate => {
-        foreignPrice.textContent = (rate * localPrice.value).toFixed(4);
+      this.updateRate().then(() => {
+        foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
       });
      }
   }
@@ -136,29 +145,21 @@
   const inputLocalCurrency = document.getElementById("input-local-currency");
   const inputForeignCurrency = document.getElementById("input-foreign-currency");
 
-  fetchInitData();
-  
-  async function fetchInitData() {
-    const apiUrl = "https://open.er-api.com/v6/latest/AED";
-    try {
-      const response = await fetch(apiUrl);
+  InitLoadFunction();
 
-      if (!response.ok) {
-        throw new Error("HTTP ERROR Status:", response.status);
-      }
-
-      const data = await response.json();
-      console.log("API Response", data);
-      generateCurrencyOptions(data, inputLocalCurrency, LOCAL_CURRENCY);
-      generateCurrencyOptions(data, inputForeignCurrency, FOREIGN_CURRENCY);
-      changeValue();
-    } catch (error) {
-      console.error("Error fetching data:", error.message);
-    }
+  async function InitLoadFunction() {
+    const data = await fetchData("https://open.er-api.com/v6/latest/AED");
+    const currencyCodes = Object.keys(data.rates);
+    console.log(currencyCodes);
+    generateCurrencyOptions(currencyCodes, inputLocalCurrency, LOCAL_CURRENCY);
+    generateCurrencyOptions(currencyCodes, inputForeignCurrency, FOREIGN_CURRENCY);
+    changeValue();
   }
 
+
   function generateCurrencyOptions(data, selectElement, selectedCurrencyCode) {
-    const currencyCodes = Object.keys(data.rates);
+    // const currencyCodes = Object.keys(data.rates);
+    const currencyCodes = data;
 
     for (const code of currencyCodes) {
       const option = document.createElement("option");
@@ -215,8 +216,9 @@
     }
 
     getProductForeignPriceNumber() {
-      return (this.rate * Number(this.localPrice)).toFixed(2);
+      // return roundToTwoDecimalPlaces(this.rate * Number(this.localPrice));
       // return this.rate * Number(this.localPrice);
+      return "結果考え中...";
     }
   }
 
@@ -259,7 +261,8 @@
     span_productNmae.textContent = item.getProductNameString();
     td_localValue.textContent = item.getProductLocalPriceNumber();
     td_localValue.classList.add("get-product-local-price");
-    td_foreignValue.textContent = item.getProductForeignPriceNumber();
+    // td_foreignValue.textContent = item.getProductForeignPriceNumber();
+    td_foreignValue.textContent = GET_foreignPrice(item.getProductLocalPriceNumber(), 2);
     td_foreignValue.classList.add("get-product-foreign-price");
     td_localCurrency.textContent = LOCAL_CURRENCY;
     td_foreignCurrency.textContent = FOREIGN_CURRENCY;
@@ -295,11 +298,11 @@
 
     let amount = 0;
     for (let i = 0; i < SHOPPING_LISTS.length; i++) {
-      const value = Number(SHOPPING_LISTS[i]["localPrice"]);
+      const value = SHOPPING_LISTS[i]["localPrice"];
       amount = amount + value;
     }
     localAmount.textContent = amount;
-    foreignAmount.textContent = (amount * RATE).toFixed(2);
+    foreignAmount.textContent = GET_foreignPrice(amount, 2);
   });
 
 
@@ -319,8 +322,8 @@
 
     for (let i = 0; i < array.length; i++) {
       console.log(array[i].textContent);
-      const localPrice = Number(array[i].textContent);
-      const NewForeignPrice = (localPrice * RATE).toFixed(2);
+      const localPrice =  Number(array[i].textContent);
+      const NewForeignPrice = GET_foreignPrice(localPrice, 2);
       // console.log(array2[i].textContent);
       array2[i].textContent = NewForeignPrice;
       // console.log(array2[i].textContent);
