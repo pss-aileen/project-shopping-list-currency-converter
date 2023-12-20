@@ -8,6 +8,16 @@ input {
   font-size: 18px;
 }
 
+button {
+  font-size: 14px;
+  padding: 4px 16px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.6;
+}
+
 select {
   font-size: 18px;
   padding: 4px;
@@ -30,7 +40,9 @@ select {
   width: 50%;
 }
 .shopping-list th:nth-child(2),
-.shopping-list th:nth-child(3) {
+.shopping-list th:nth-child(3),
+.shopping-list td:nth-child(2),
+.shopping-list td:nth-child(3) {
   width: 25%;
   text-align: right;
 }/*# sourceMappingURL=style.css.map */
