@@ -49,6 +49,8 @@
 
     <div class="related-input-btns">
       <button id="btn-save" class="btn">SAVE CURRENCY</button>
+      <button id="btn-call-local-storage" class="btn">設定を呼び出す</button>
+
     </div>
 
     <hr class="border">
@@ -87,12 +89,12 @@
       <div class="shopping-list-total__result">
         <table class="shopping-list-total__table">
           <tr class="shopping-list-total__local">
-            <td>100</td>
-            <td id="shopping-list-foreign-currency">FROM</td>
+            <td id="shopping-list-total-local-value">0</td>
+            <td id="shopping-list-local-currency">FROM</td>
           </tr>
           <tr class="shopping-list-total__foreign">
-            <td>3000</td>
-            <td id="shopping-list-local-currency">TO</td>
+            <td id="shopping-list-total-foreign-value">0</td>
+            <td id="shopping-list-foreign-currency">TO</td>
           </tr>
         </table>
       </div>
@@ -110,6 +112,8 @@
     <div class="shopping-list-delete">
       <button class="shopping-list-delete__btn">DELETE ALL LISTS</button>
     </div>
+
+    <button id="btn-recalc" class="btn">再計算</button>
 
   </div><!--/wrapper-->
 
