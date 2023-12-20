@@ -45,6 +45,32 @@
     }
   }
 
+  function updateInputCurrency() {
+    LOCAL_CURRENCY = document.getElementById("input-local-currency").value;
+    FOREIGN_CURRENCY = document.getElementById("input-foreign-currency").value;
+  }
+
+  async function updateRate() {
+    const data = await fetchData(`https://open.er-api.com/v6/latest/${LOCAL_CURRENCY}`);
+    RATE = data.rates[FOREIGN_CURRENCY];
+    console.log("UPDATED RATE", RATE);
+    return data.rates[FOREIGN_CURRENCY];
+  }
+
+  async function setValues() {
+    console.log("setValue");
+    const localPrice = document.getElementById("local-price");
+    const foreignPrice = document.getElementById("foreign-price");
+    
+    // await updateRate();
+    // foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
+    // console.log(foreignPrice);
+
+    updateRate().then(() => {
+      foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
+    });
+   }
+
   /******************************************************
     initLoad
     - CURRENCY一覧を取得する、selectに入れる、初期値を設定する
@@ -58,7 +84,6 @@
   
   async function GET_CURRENCY_SYMBOL() {
     const result = await fetchData("https://gist.githubusercontent.com/ksafranski/2973986/raw/5fda5e87189b066e11c1bf80bbfbecb556cf2cc1/Common-Currency.json");
-    console.log(result);
   }
 
   GET_CURRENCY_SYMBOL();
@@ -110,32 +135,20 @@
       console.log(`LOCAL_CURRENCY: ${LOCAL_CURRENCY}, FOREIFN_CURRENCY: ${FOREIGN_CURRENCY}`);
     }
     
-    getApiUrl() {
-      return `https://open.er-api.com/v6/latest/${this.localCurrency}`;
-    }
+    // async updateRate() {
+    //   const data = await fetchData(`https://open.er-api.com/v6/latest/${this.localCurrency}`);
+    //   RATE = data.rates[this.foreignCurrency];
+    //   return data.rates[this.foreignCurrency];
+    // }
 
-    getLocalCurrencyString() {
-      return this.localCurrency;
-    }
+    // async setValues() {
+    //   const localPrice = document.getElementById("local-price");
+    //   const foreignPrice = document.getElementById("foreign-price");
 
-    getForeignCurrencyString() {
-      return this.foreignCurrency;
-    }
-
-    async updateRate() {
-      const data = await fetchData(this.getApiUrl());
-      RATE = data.rates[this.foreignCurrency];
-      return data.rates[this.foreignCurrency];
-    }
-
-    async setValues() {
-      const localPrice = document.getElementById("local-price");
-      const foreignPrice = document.getElementById("foreign-price");
-
-      this.updateRate().then(() => {
-        foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
-      });
-     }
+    //   this.updateRate().then(() => {
+    //     foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
+    //   });
+    //  }
   }
  
   /******************************************************
@@ -150,16 +163,14 @@
   async function InitLoadFunction() {
     const data = await fetchData("https://open.er-api.com/v6/latest/AED");
     const currencyCodes = Object.keys(data.rates);
-    console.log(currencyCodes);
+    // console.log(currencyCodes);
     generateCurrencyOptions(currencyCodes, inputLocalCurrency, LOCAL_CURRENCY);
     generateCurrencyOptions(currencyCodes, inputForeignCurrency, FOREIGN_CURRENCY);
-    changeValue();
+    setValues();
   }
 
-
-  function generateCurrencyOptions(data, selectElement, selectedCurrencyCode) {
-    // const currencyCodes = Object.keys(data.rates);
-    const currencyCodes = data;
+  function generateCurrencyOptions(currencyCodes, selectElement, selectedCurrencyCode) {
+    // const currencyCodes = Object.keys(currencyCodes.rates);
 
     for (const code of currencyCodes) {
       const option = document.createElement("option");
@@ -172,12 +183,15 @@
   }
  
   function changeValue() {
-    LOCAL_CURRENCY = inputLocalCurrency.value;
-    FOREIGN_CURRENCY = inputForeignCurrency.value;
-    const data = new Currency(LOCAL_CURRENCY, FOREIGN_CURRENCY);
-    data.setValues();
+    // updateInputCurrency();
+    // LOCAL_CURRENCY = inputLocalCurrency.value;
+    // FOREIGN_CURRENCY = inputForeignCurrency.value;
+    // const data = new Currency(LOCAL_CURRENCY, FOREIGN_CURRENCY);
+    // updateInputCurrency();
+    setValues();
     shoppingListLocalCurrency.textContent = LOCAL_CURRENCY;
     shoppingListForeignCurrency.textContent = FOREIGN_CURRENCY;
+
   }
 
 
@@ -193,6 +207,7 @@
     [LOCAL_CURRENCY, FOREIGN_CURRENCY] = [FOREIGN_CURRENCY, LOCAL_CURRENCY];
     inputLocalCurrency.value = LOCAL_CURRENCY;
     inputForeignCurrency.value = FOREIGN_CURRENCY;
+    // updateRate();
     changeValue();
   });
 
@@ -291,7 +306,7 @@
 
     SHOPPING_LISTS.push(object);
 
-    console.log(SHOPPING_LISTS);
+    // console.log(SHOPPING_LISTS);
 
     const localAmount = document.getElementById("shopping-list-total-local-value");
     const foreignAmount = document.getElementById("shopping-list-total-foreign-value");
