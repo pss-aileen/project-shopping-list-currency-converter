@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shopping List Currency Converter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -12,54 +16,100 @@
 
   <div class="wrapper">
 
-    <h1>Shopping List Currency Converter</h1>
+    <h1 class="site-title">Shopping List<br>Currency Converter</h1>
 
-    <select id="input-local-currency">
-    </select>
+    <p class="site-lead">This app help to manage your travel money.</p>
 
-    <select id="input-foreign-currency">
-    </select>
+    <div class="input-currency">
+      <div class="input-currency__group">
+        <input type="number" value="1" min="0" id="local-price" class="input-currency__local-value" placeholder="FROM">
+        <div class="input-currency__select-wrapper">
+          <i class="bi bi-chevron-down input-currency__select-button"></i>
+          <select id="input-local-currency" class="input-currency__select">
+          </select>
+        </div>
+      </div>
+      <button id="btn-swap-currency" class="btn-swap-currency">
+        <i class="bi bi-arrow-down-up"></i>
+      </button>
+      <div class="input-currency__group">
+        <span id="foreign-price" class="input-currency__foreign-value">FROM</span>
+        <div class="input-currency__select-wrapper">
+          <i class="bi bi-chevron-down input-currency__select-button"></i>
+          <select id="input-foreign-currency" class="input-currency__select">
+          </select>
+        </div>
+      </div>
+    </div>
 
-    <p>
-      <input type="number" value="1" min="0" id="local-price">
+    <!--
       <span id="local-currency"></span>
-      は
-      <span id="foreign-price"></span>
       <span id="foreign-currency"></span>
-    </p>
+    -->
 
-    <button id="btn-save-currency-setting">設定を保存する</button>
-    <button id="btn-call-currency-setting">設定を呼び出す</button>
+    <div class="related-input-btns">
+      <button id="btn-save" class="btn">SAVE CURRENCY</button>
+    </div>
 
-    <button id="btn-save">とりあえずローカル保存</button>
+    <hr class="border">
 
-    <button id="btn-swap-currency">swap</button>
+    <h2 class="heading">Shopping List</h2>
 
-    <p>
-    <h2>商品追加</h2>
-    <input type="text" id="new-product" value="test">
-    <input type="number" id="new-local-price" min="0" value="1">
-    <button id="btn-create-shoppping-list-element">追加</button>
-    </p>
+    <div class="shopping-list" id="shopping-list-content">
+      <!-- <div class="shopping-list__item">
+        <div class="shopping-list__product-name">
+          <span>
+            carrot
+          </span>
+        </div>
+        <div class="shopping-list__product-price">
+          <table>
+            <tr>
+              <td>100</td>
+              <td>JPY</td>
+            </tr>
+            <tr>
+              <td>3000</td>
+              <td>MYR</td>
+            </tr>
+          </table>
+        </div>
+        <div class="shopping-list__delete">
+          <i class="bi bi-x-lg shopping-list__delete-icon"></i>
+        </div>
+      </div> -->
+    </div>
 
+    <div class="shopping-list-total">
+      <div class="shopping-list-total__heading">
+        TOTAL
+      </div>
+      <div class="shopping-list-total__result">
+        <table class="shopping-list-total__table">
+          <tr class="shopping-list-total__local">
+            <td>100</td>
+            <td id="shopping-list-foreign-currency">FROM</td>
+          </tr>
+          <tr class="shopping-list-total__foreign">
+            <td>3000</td>
+            <td id="shopping-list-local-currency">TO</td>
+          </tr>
+        </table>
+      </div>
+    </div>
 
-    <table id="shopping-list" class="shopping-list">
-      <thead>
-        <tr>
-          <th>商品</th>
-          <th id="shopping-list-local-currency">MYR</th>
-          <th id="shopping-list-foreign-currency">JPY</th>
-        </tr>
-        <tr>
-          <th></th>
-          <th id="local-price-amount">合計</th>
-          <th id="foreign-price-amount">合計</th>
-        </tr>
-      </thead>
-      <tbody id="shopping-list-content">
+    <div class="shopping-list-add">
+      <input type="text" id="new-product" value="TEST" placeholder="product name"
+        class="shopping-list-add__input shopping-list-add__input--product-name">
+      <input type="number" id="new-local-price" min="0" value="10" placeholder="10"
+        class="shopping-list-add__input shopping-list-add__input--product-price">
+      <button id="btn-create-shoppping-list-element" class="shopping-list-add__button"><i
+          class="bi bi-plus-lg"></i></button>
+    </div>
 
-      </tbody>
-    </table>
+    <div class="shopping-list-delete">
+      <button class="shopping-list-delete__btn">DELETE ALL LISTS</button>
+    </div>
 
   </div><!--/wrapper-->
 
