@@ -8,6 +8,19 @@ input {
   font-size: 18px;
 }
 
+button {
+  font-size: 14px;
+  padding: 4px 16px;
+  // border-radius: 999px;
+  // border: 1px solid #ccc;
+  margin-top: 8px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .6;
+  }
+}
+
 select {
   font-size: 18px;
   padding: 4px;
@@ -33,7 +46,9 @@ select {
   }
 
   th:nth-child(2),
-  th:nth-child(3) {
+  th:nth-child(3),
+  td:nth-child(2),
+  td:nth-child(3) {
     width: calc((100% / 2) - (50% / 2));
     text-align: right;
   }

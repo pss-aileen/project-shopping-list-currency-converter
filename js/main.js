@@ -5,25 +5,33 @@
     グローバル変数
   ******************************************************/
   
-  let LOCAL_CURRENCY = "";
-  let FOREIGN_CURRENCY = "";
-  let RATE = "";
+  let LOCAL_CURRENCY = "MYR";
+  let FOREIGN_CURRENCY = "JPY";
+  let RATE = 0;
   const shoppingProducts = [];
 
   /******************************************************
     ローカルストレージ
   ******************************************************/
   
+  document.getElementById("btn-save").addEventListener("click", () => {
+    saveOnLocalStorage();
+  });
+  
   function saveOnLocalStorage() {
     const currencySetting = {
-      "localCurrency": ValuesManager.localCurrency,
-      "ForeignCurrency": ValuesManager.foreignCurrency,
-      "rate": ValuesManager.rate
+      "localCurrency": LOCAL_CURRENCY,
+      "ForeignCurrency": FOREIGN_CURRENCY,
+      "rate": RATE,
+      "storageDate": new Date()
     };
 
     const shoppingList = {
 
     }
+    localStorage.setItem("currencySetting", JSON.stringify(currencySetting));
+    localStorage.setItem("shoppingList", JSON.stringify(shoppingProducts));
+    console.log(localStorage.getItem("currencySetting"), localStorage.getItem("shoppingList"));
   }
 
   /******************************************************
@@ -35,8 +43,12 @@
     constructor(localCurrency, foreignCurrency) {
       this.localCurrency = localCurrency;
       this.foreignCurrency = foreignCurrency;
+      LOCAL_CURRENCY = this.localCurrency;
+      FOREIGN_CURRENCY = this.foreignCurrency;
+      console.log(`LOCAL_CURRENCY: ${LOCAL_CURRENCY}, FOREIFN_CURRENCY: ${FOREIGN_CURRENCY}`);
     }
 
+    
     getApiUrl() {
       return `https://open.er-api.com/v6/latest/${this.localCurrency}`;
     }
@@ -57,6 +69,8 @@
         }
 
         const data = await response.json();
+        RATE = data.rates[this.foreignCurrency];
+        console.log("RATE", RATE);
         return data.rates[this.foreignCurrency];
       } catch (error) {
         console.error("EROOR FETCHING DATA", error.message);
@@ -97,8 +111,8 @@
 
       const data = await response.json();
       console.log("API Response", data);
-      generateCurrencyOptions(data, inputLocalCurrency, "MYR");
-      generateCurrencyOptions(data, inputForeignCurrency, "JPY");
+      generateCurrencyOptions(data, inputLocalCurrency, LOCAL_CURRENCY);
+      generateCurrencyOptions(data, inputForeignCurrency, FOREIGN_CURRENCY);
       changeValue();
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -119,8 +133,12 @@
   }
  
   function changeValue() {
-    const data = new Currency(inputLocalCurrency.value, inputForeignCurrency.value);
+    LOCAL_CURRENCY = inputLocalCurrency.value;
+    FOREIGN_CURRENCY = inputForeignCurrency.value;
+    const data = new Currency(LOCAL_CURRENCY, FOREIGN_CURRENCY);
     data.setValues();
+    shoppingListLocalCurrency.textContent = LOCAL_CURRENCY;
+    shoppingListForeignCurrency.textContent = FOREIGN_CURRENCY;
   }
 
 
@@ -132,6 +150,12 @@
   inputForeignCurrency.addEventListener("input", changeValue);
   document.getElementById("local-price").addEventListener("change", changeValue);
 
+  document.getElementById("btn-swap-currency").addEventListener("click", () => {
+    [LOCAL_CURRENCY, FOREIGN_CURRENCY] = [FOREIGN_CURRENCY, LOCAL_CURRENCY];
+    inputLocalCurrency.value = LOCAL_CURRENCY;
+    inputForeignCurrency.value = FOREIGN_CURRENCY;
+    changeValue();
+  });
 
   /******************************************************
     Shopping List
@@ -162,18 +186,17 @@
     Shopping List追加
   ******************************************************/
   
+  const shoppingListLocalCurrency = document.getElementById("shopping-list-local-currency");
+  const shoppingListForeignCurrency = document.getElementById("shopping-list-foreign-currency");
+  
   const CreateListBtn = document.getElementById("btn-create-shoppping-list-element");
 
   CreateListBtn.addEventListener("click", () => {
     const productName = document.getElementById("new-product");
     const localPrice = document.getElementById("new-local-price");
 
-    const item = new Product(productName.value, localPrice.value, 30.4027);
+    const item = new Product(productName.value, localPrice.value, RATE);
     
-    // console.log(item.getProductNameString());
-    // console.log(item.getProductLocalPriceNumber());
-    // console.log(item.getProductForeignPriceNumber());
-
     const tr = document.createElement("tr");
     const td01 = document.createElement("td");
     const td02 = document.createElement("td");
