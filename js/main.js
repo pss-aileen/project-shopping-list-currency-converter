@@ -79,13 +79,13 @@
 
     async setValues() {
       const localPrice = document.getElementById("local-price");
-      const localCurrency = document.getElementById("local-currency");
       const foreignPrice = document.getElementById("foreign-price");
-      const foreignCurrency = document.getElementById("foreign-currency");
+      // const localCurrency = document.getElementById("local-currency");
+      // const foreignCurrency = document.getElementById("foreign-currency");
 
       this.getRate().then(rate => {
-        localCurrency.textContent = this.getLocalCurrencyString();
-        foreignCurrency.textContent = this.getForeignCurrencyString();
+        // localCurrency.textContent = this.getLocalCurrencyString();
+        // foreignCurrency.textContent = this.getForeignCurrencyString();
         foreignPrice.textContent = (rate * localPrice.value).toFixed(4);
       });
      }
@@ -197,21 +197,51 @@
 
     const item = new Product(productName.value, localPrice.value, RATE);
     
-    const tr = document.createElement("tr");
-    const td01 = document.createElement("td");
-    const td02 = document.createElement("td");
-    const td03 = document.createElement("td");
+    const div_item = document.createElement("div");
+    const div_productName = document.createElement("div");
+    const span_productNmae = document.createElement("span");
+    const div_productPrice = document.createElement("div");
+    const table = document.createElement("table");
+    const tr_local = document.createElement("tr");
+    const tr_foreign = document.createElement("tr");
+    const td_localValue = document.createElement("td");
+    const td_foreignlValue = document.createElement("td");
+    const td_localCurrency = document.createElement("td");
+    const td_foreignlCurrency = document.createElement("td");
+    const div_delete = document.createElement("div");
+    const i_deleteIcon = document.createElement("i");
 
-    td01.textContent = item.getProductNameString();
-    td02.textContent = item.getProductLocalPriceNumber();
-    td03.textContent = item.getProductForeignPriceNumber();
+    div_item.classList.add("shopping-list__item");
+    div_productName.classList.add("shopping-list__product-name");
+    div_productPrice.classList.add("shopping-list__product-price");
+    div_delete.classList.add("shopping-list__delete");
+    i_deleteIcon.classList.add("shopping-list__delete-icon", "bi", "bi-x-lg");
+
+
+
+
+    span_productNmae.textContent = item.getProductNameString();
+    td_localValue.textContent = item.getProductLocalPriceNumber();
+    td_foreignlValue.textContent = item.getProductForeignPriceNumber();
+    // td_foreignlValue.textContent = "外国通貨";
+    td_localCurrency.textContent = LOCAL_CURRENCY;
+    td_foreignlCurrency.textContent = FOREIGN_CURRENCY;
 
     const shoppingList = document.getElementById("shopping-list-content");
 
-    shoppingList.appendChild(tr);
-    tr.appendChild(td01);
-    tr.appendChild(td02);
-    tr.appendChild(td03);
+    shoppingList.appendChild(div_item);
+    div_item.appendChild(div_productName);
+    div_item.appendChild(div_productPrice);
+    div_item.appendChild(div_delete);
+    div_productName.appendChild(span_productNmae);
+    div_productPrice.appendChild(table);
+    table.appendChild(tr_local);
+    table.appendChild(tr_foreign);
+    tr_local.appendChild(td_localValue);
+    tr_local.appendChild(td_localCurrency);
+    tr_foreign.appendChild(td_foreignlValue);
+    tr_foreign.appendChild(td_foreignlCurrency);
+    div_delete.appendChild(i_deleteIcon);
 
     const object = {
       "productName": item.getProductNameString(),
