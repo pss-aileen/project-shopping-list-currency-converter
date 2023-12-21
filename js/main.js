@@ -3,8 +3,8 @@
   /******************************************************
     グローバル変数
   ******************************************************/
-  let LOCAL_CURRENCY = "MYR";
-  let FOREIGN_CURRENCY = "JPY";
+  let LOCAL_CURRENCY = "JPY";
+  let FOREIGN_CURRENCY = "MYR";
   let RATE = 0;
   const SHOPPING_LISTS = [];
 
@@ -69,26 +69,43 @@
   function saveOnLocalStorage() {
     const currencySetting = {
       "localCurrency": LOCAL_CURRENCY,
-      "ForeignCurrency": FOREIGN_CURRENCY,
+      "foreignCurrency": FOREIGN_CURRENCY,
       "rate": RATE,
       "storageDate": new Date()
     };
-
+    console.log(currencySetting);
     localStorage.setItem("currencySetting", JSON.stringify(currencySetting));
-    localStorage.setItem("shoppingList", JSON.stringify(SHOPPING_LISTS));
   }
+  
+  document.getElementById("btn-save-shopping-list").addEventListener("click", () => {
+    localStorage.setItem("shoppingList", JSON.stringify(SHOPPING_LISTS));
+    console.log(SHOPPING_LISTS);
+  });
 
   /******************************************************
    LocalStorage 呼び出し
    ******************************************************/
   
   document.getElementById("btn-call-local-storage").addEventListener("click", () => {
-    CallFromLocalStorage();
+    const currencySettingFromLocalStorage = JSON.parse(localStorage.getItem("currencySetting"));
+    console.log(currencySettingFromLocalStorage);
+
+    LOCAL_CURRENCY = currencySettingFromLocalStorage["localCurrency"];
+    FOREIGN_CURRENCY = currencySettingFromLocalStorage["foreignCurrency"];
+    console.log(LOCAL_CURRENCY, FOREIGN_CURRENCY);
+    // changeValue();
+
+    document.getElementById("input-local-currency").value = LOCAL_CURRENCY;
+    document.getElementById("input-foreign-currency").value = FOREIGN_CURRENCY;
+    setPrices();
+    updateShoppingListCurrency();
   });
   
-  function CallFromLocalStorage() {
-    console.log(localStorage.getItem("currencySetting"), localStorage.getItem("shoppingList"));
-  }
+  document.getElementById("btn-call-shopping-list").addEventListener("click", () => {
+    const shoppingListFromLocalStorage = JSON.parse(localStorage.getItem("shoppingList"));
+    console.log(shoppingListFromLocalStorage);
+  });
+
 
 
   /******************************************************
@@ -124,6 +141,7 @@
   }
 
   function updateInputCurrency() {
+    console.log("UPDATE INPUT CURRENCY");
     LOCAL_CURRENCY = document.getElementById("input-local-currency").value;
     FOREIGN_CURRENCY = document.getElementById("input-foreign-currency").value;
   }
@@ -185,6 +203,22 @@
 
     const productName = productNameElement.value;
     const localPrice = Number(localPriceElement.value);
+
+    if (!productName || !localPrice) {
+      console.log("入力してください");
+      return;
+    }
+
+    const object = {
+      // "date": new Date(),
+      "productName": productName,
+      "localPrice": localPrice
+    }
+
+    SHOPPING_LISTS.push(object);
+
+    // 配列から要素を毎回作り直す方向で。
+    // 削除を押した場合も配列から抜かして、再生成
     
     const div_item = createNewElement("div", ["shopping-list__item"], null);
     const div_productName = createNewElement("div", ["shopping-list__product-name"], null);
@@ -210,13 +244,7 @@
     appendChildren(tr_foreign, [td_foreignValue, td_foreignCurrency]);
     appendChildren(div_delete, [i_deleteIcon]);
 
-    const object = {
-      "id": SHOPPING_LISTS.length,
-      "productName": productName,
-      "localPrice": localPrice
-    }
 
-    SHOPPING_LISTS.push(object);
 
     let amount = 0;
     for (let i = 0; i < SHOPPING_LISTS.length; i++) {
@@ -242,12 +270,14 @@
       children.forEach(child => parent.appendChild(child));
     }
 
+    productNameElement.value = "";
+    localPriceElement.value = "";
   });
 
 
-  document.getElementById("btn-recalc").addEventListener("click", () => {
-    updateForeignPrice();
-  });
+  // document.getElementById("btn-recalc").addEventListener("click", () => {
+  //   updateForeignPrice();
+  // });
 
   function updateForeignPrice() {
     const foreignPriceElements = document.querySelectorAll(".get-product-foreign-price");
