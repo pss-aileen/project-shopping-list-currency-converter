@@ -226,49 +226,33 @@
     const productName = productNameElement.value;
     const localPrice = Number(localPriceElement.value);
     
-    const div_item = document.createElement("div");
-    const div_productName = document.createElement("div");
-    const span_productNmae = document.createElement("span");
-    const div_productPrice = document.createElement("div");
-    const table = document.createElement("table");
-    const tr_local = document.createElement("tr");
-    const tr_foreign = document.createElement("tr");
-    const td_localValue = document.createElement("td");
-    const td_foreignValue = document.createElement("td");
-    const td_localCurrency = document.createElement("td");
-    const td_foreignCurrency = document.createElement("td");
-    const div_delete = document.createElement("div");
-    const i_deleteIcon = document.createElement("i");
+    const div_item = createNewElement("div", ["shopping-list__item"], null);
 
-    div_item.classList.add("shopping-list__item");
-    div_productName.classList.add("shopping-list__product-name");
-    div_productPrice.classList.add("shopping-list__product-price");
-    div_delete.classList.add("shopping-list__delete");
-    i_deleteIcon.classList.add("shopping-list__delete-icon", "bi", "bi-x-lg");
+    const div_productName = createNewElement("div", ["shopping-list__product-name"], null);
+    const span_productNmae = createNewElement("span", null, productName);
 
-    span_productNmae.textContent = productName;
-    td_localValue.textContent = localPrice;
-    td_localValue.classList.add("get-product-local-price");
-    td_foreignValue.textContent = GET_foreignPrice(localPrice, 2);
-    td_foreignValue.classList.add("get-product-foreign-price");
-    td_localCurrency.textContent = LOCAL_CURRENCY;
-    td_foreignCurrency.textContent = FOREIGN_CURRENCY;
+    const div_productPrice = createNewElement("div", ["shopping-list__product-price"], null);
+    const table = createNewElement("table", null, null);
+    const tr_local = createNewElement("tr", null, null);
+    const td_localValue = createNewElement("td", ["get-product-local-price"], localPrice);
+    const td_foreignValue = createNewElement("td", ["get-product-foreign-price"], GET_foreignPrice(localPrice, 2));
+    const tr_foreign = createNewElement("tr", null, null);
+    const td_localCurrency = createNewElement("td", null, LOCAL_CURRENCY);
+    const td_foreignCurrency = createNewElement("td", null, FOREIGN_CURRENCY);
 
-    const shoppingList = document.getElementById("shopping-list-content");
+    const div_delete = createNewElement("div", ["shopping-list__delete"], null);
+    const i_deleteIcon = createNewElement("i", ["shopping-list__delete-icon", "bi", "bi-x-lg"], null);
 
-    shoppingList.appendChild(div_item);
-    div_item.appendChild(div_productName);
-    div_item.appendChild(div_productPrice);
-    div_item.appendChild(div_delete);
-    div_productName.appendChild(span_productNmae);
-    div_productPrice.appendChild(table);
-    table.appendChild(tr_local);
-    table.appendChild(tr_foreign);
-    tr_local.appendChild(td_localValue);
-    tr_local.appendChild(td_localCurrency);
-    tr_foreign.appendChild(td_foreignValue);
-    tr_foreign.appendChild(td_foreignCurrency);
-    div_delete.appendChild(i_deleteIcon);
+    const targetElement = document.getElementById("shopping-list-content");
+
+    targetElement.appendChild(div_item);
+    appendChildren(div_item, [div_productName, div_productPrice, div_delete]);
+    appendChildren(div_productName, [span_productNmae]);
+    appendChildren(div_productPrice, [table]);
+    appendChildren(table, [tr_local, tr_foreign])
+    appendChildren(tr_local, [td_localValue, td_localCurrency]);
+    appendChildren(tr_foreign, [td_foreignValue, td_foreignCurrency]);
+    appendChildren(div_delete, [i_deleteIcon]);
 
     const object = {
       "id": SHOPPING_LISTS.length,
@@ -288,6 +272,22 @@
     }
     localAmount.textContent = amount;
     foreignAmount.textContent = GET_foreignPrice(amount, 2);
+
+    function createNewElement(tagName, classNames, textContent) {
+      const element = document.createElement(tagName);
+      if (classNames) {
+        element.classList.add(...classNames);
+      }
+      if (textContent) {
+        element.textContent = textContent;
+      }
+      return element;
+    }
+
+    function appendChildren(parent, children) {
+      children.forEach(child => parent.appendChild(child));
+    }
+
   });
 
 

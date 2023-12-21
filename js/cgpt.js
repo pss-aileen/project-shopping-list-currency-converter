@@ -1,106 +1,80 @@
-'use strict';
+// イベントリスナーのコールバック関数を定義
+CreateListBtn.addEventListener("click", () => {
+  // HTML要素の取得
+  const productNameElement = document.getElementById("new-product");
+  const localPriceElement = document.getElementById("new-local-price");
 
-// 通貨情報を管理するクラス
-class Currency {
-  constructor(localCurrency, foreignCurrency) {
-    this.localCurrency = localCurrency;
-    this.foreignCurrency = foreignCurrency;
-  }
+  // 入力値の取得
+  const productName = productNameElement.value;
+  const localPrice = Number(localPriceElement.value);
 
-  getApiUrl() {
-    return `https://open.er-api.com/v6/latest/${this.localCurrency}`;
-  }
+  // 新しいアイテムを作成
+  const div_item = createNewElement("div", "shopping-list__item");
+  const div_productName = createNewElement("div", "shopping-list__product-name");
+  const span_productNmae = createNewElement("span");
+  const div_productPrice = createNewElement("div", "shopping-list__product-price");
+  const table = createNewElement("table");
+  const [tr_local, tr_foreign] = createMultipleElements(["tr", "tr"]);
+  const [td_localValue, td_foreignValue, td_localCurrency, td_foreignCurrency] =
+      createMultipleElements(["td", "td", "td", "td"]);
+  const div_delete = createNewElement("div", "shopping-list__delete");
+  const i_deleteIcon = createNewElement("i", "shopping-list__delete-icon", "bi", "bi-x-lg");
 
-  getLocalCurrencyString() {
-    return this.localCurrency;
-  }
+  // 要素にクラスを追加
+  span_productNmae.textContent = productName;
+  td_localValue.textContent = localPrice;
+  td_localValue.classList.add("get-product-local-price");
+  td_foreignValue.textContent = GET_foreignPrice(localPrice, 2);
+  td_foreignValue.classList.add("get-product-foreign-price");
+  td_localCurrency.textContent = LOCAL_CURRENCY;
+  td_foreignCurrency.textContent = FOREIGN_CURRENCY;
 
-  getForeignCurrencyString() {
-    return this.foreignCurrency;
-  }
+  // ショッピングリストに新しいアイテムを追加
+  const shoppingList = document.getElementById("shopping-list-content");
+  appendChildren(div_item, [div_productName, div_productPrice, div_delete]);
+  appendChildren(div_productName, [span_productNmae]);
+  appendChildren(div_productPrice, [table]);
+  appendChildren(table, [tr_local, tr_foreign]);
+  appendChildren(tr_local, [td_localValue, td_localCurrency]);
+  appendChildren(tr_foreign, [td_foreignValue, td_foreignCurrency]);
+  appendChildren(div_delete, [i_deleteIcon]);
+  shoppingList.appendChild(div_item);
 
-  async getRate() {
-    try {
-      const response = await fetch(this.getApiUrl());
-      if (!response.ok) {
-        throw new Error(`HTTP ERROR Status: ${response.status}`);
-      }
+  // ショッピングリストデータを更新
+  const object = {
+      "id": SHOPPING_LISTS.length,
+      "productName": productName,
+      "localPrice": localPrice
+  };
+  SHOPPING_LISTS.push(object);
 
-      const data = await response.json();
-      return data.rates[this.foreignCurrency];
-    } catch (error) {
-      console.error("Error fetching data:", error.message);
-    }
-  }
+  // 合計金額を更新
+  updateTotalAmount();
+});
 
-  setValues() {
-    const localPrice = document.getElementById("local-price");
-    const localCurrencyElem = document.getElementById("local-currency");
-    const foreignPriceElem = document.getElementById("foreign-price");
-    const foreignCurrencyElem = document.getElementById("foreign-currency");
-
-    // 通貨レートを非同期で取得し、画面に反映
-    this.getRate().then(rate => {
-      localCurrencyElem.textContent = this.getLocalCurrencyString();
-      foreignCurrencyElem.textContent = this.getForeignCurrencyString();
-      foreignPriceElem.textContent = (rate * localPrice.value).toFixed(4);
-    });
-  }
+// 複数の子要素を持つ新しいHTML要素を作成
+function createNewElement(tagName, ...classNames) {
+  const element = document.createElement(tagName);
+  element.classList.add(...classNames);
+  return element;
 }
 
-// APIからデータを取得する関数
-async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP ERROR Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log("API Response", data);
-    return data;
-  } catch (error) {
-    console.error("Error fetching data:", error.message);
-  }
+// 複数のHTML要素を作成して配列で返す
+function createMultipleElements(tags) {
+  return tags.map(tag => createNewElement(tag));
 }
 
-// 通貨選択のセレクトボックスを生成
-function generateCurrencyOptions(data, selectElem, selectedCurrencyCode) {
-  const currencyCodes = Object.keys(data.rates);
-
-  for (const code of currencyCodes) {
-    const option = document.createElement("option");
-    option.textContent = code;
-    if (code === selectedCurrencyCode) {
-      option.selected = true;
-    }
-    selectElem.appendChild(option);
-  }
+// 親要素に複数の子要素を追加
+function appendChildren(parent, children) {
+  children.forEach(child => parent.appendChild(child));
 }
 
-// 初期化処理
-async function init() {
-  const apiUrl = "https://open.er-api.com/v6/latest/AED";
-  const data = await fetchData(apiUrl);
+// 合計金額を更新する関数
+function updateTotalAmount() {
+  const localAmount = document.getElementById("shopping-list-total-local-value");
+  const foreignAmount = document.getElementById("shopping-list-total-foreign-value");
 
-  const inputLocalCurrency = document.getElementById("input-local-currency");
-  const inputForeignCurrency = document.getElementById("input-foreign-currency");
-
-  // 初期データをセット
-  generateCurrencyOptions(data, inputLocalCurrency, "JPY");
-  generateCurrencyOptions(data, inputForeignCurrency, "MYR");
-
-  const initData = new Currency(inputLocalCurrency.value, inputForeignCurrency.value);
-  initData.setValues();
+  let amount = SHOPPING_LISTS.reduce((sum, item) => sum + item.localPrice, 0);
+  localAmount.textContent = amount;
+  foreignAmount.textContent = GET_foreignPrice(amount, 2);
 }
-
-// イベントリスナーの設定
-const inputLocalCurrency = document.getElementById("input-local-currency");
-const inputForeignCurrency = document.getElementById("input-foreign-currency");
-
-inputLocalCurrency.addEventListener("input", init);
-inputForeignCurrency.addEventListener("input", init);
-document.getElementById("local-price").addEventListener("change", init);
-
-// 初期化関数を実行
-init();
