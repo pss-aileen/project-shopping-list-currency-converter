@@ -152,8 +152,6 @@
   }
 
   function generateCurrencyOptions(currencyCodes, selectElement, selectedCurrencyCode) {
-    // const currencyCodes = Object.keys(currencyCodes.rates);
-
     for (const code of currencyCodes) {
       const option = document.createElement("option");
       option.textContent = code;
@@ -222,10 +220,11 @@
   const CreateListBtn = document.getElementById("btn-create-shoppping-list-element");
 
   CreateListBtn.addEventListener("click", () => {
-    const productName = document.getElementById("new-product");
-    const localPrice = document.getElementById("new-local-price");
+    const productNameElement = document.getElementById("new-product");
+    const localPriceElement = document.getElementById("new-local-price");
 
-    const item = new Product(productName.value, localPrice.value, RATE);
+    const productName = productNameElement.value;
+    const localPrice = Number(localPriceElement.value);
     
     const div_item = document.createElement("div");
     const div_productName = document.createElement("div");
@@ -247,10 +246,10 @@
     div_delete.classList.add("shopping-list__delete");
     i_deleteIcon.classList.add("shopping-list__delete-icon", "bi", "bi-x-lg");
 
-    span_productNmae.textContent = item.getProductNameString();
-    td_localValue.textContent = item.getProductLocalPriceNumber();
+    span_productNmae.textContent = productName;
+    td_localValue.textContent = localPrice;
     td_localValue.classList.add("get-product-local-price");
-    td_foreignValue.textContent = GET_foreignPrice(item.getProductLocalPriceNumber(), 2);
+    td_foreignValue.textContent = GET_foreignPrice(localPrice, 2);
     td_foreignValue.classList.add("get-product-foreign-price");
     td_localCurrency.textContent = LOCAL_CURRENCY;
     td_foreignCurrency.textContent = FOREIGN_CURRENCY;
@@ -273,13 +272,11 @@
 
     const object = {
       "id": SHOPPING_LISTS.length,
-      "productName": item.getProductNameString(),
-      "localPrice": item.getProductLocalPriceNumber()
+      "productName": productName,
+      "localPrice": localPrice
     }
 
     SHOPPING_LISTS.push(object);
-
-    // console.log(SHOPPING_LISTS);
 
     const localAmount = document.getElementById("shopping-list-total-local-value");
     const foreignAmount = document.getElementById("shopping-list-total-foreign-value");
@@ -295,29 +292,19 @@
 
 
   document.getElementById("btn-recalc").addEventListener("click", () => {
-    reCalculateForeignValue(RATE);
+    updateForeignPrice();
   });
 
-  function reCalculateForeignValue(RATE) {
-    const array = document.querySelectorAll(".get-product-local-price");
-    const array2 = document.querySelectorAll(".get-product-foreign-price");
+  function updateForeignPrice() {
+    const foreignPriceElements = document.querySelectorAll(".get-product-foreign-price");
 
-    console.log(array, array2);
-
-    // for (const value of array) { 
-    //   console.log(value.textContent);
-    // }
-
-    for (let i = 0; i < array.length; i++) {
-      console.log(array[i].textContent);
-      const localPrice =  Number(array[i].textContent);
+    for (let i = 0; i < SHOPPING_LISTS.length; i++) {
+      const localPrice = SHOPPING_LISTS[i]["localPrice"];
       const NewForeignPrice = GET_foreignPrice(localPrice, 2);
-      // console.log(array2[i].textContent);
-      array2[i].textContent = NewForeignPrice;
-      // console.log(array2[i].textContent);
+      foreignPriceElements[i].textContent = NewForeignPrice;
     }
-    
   }
+
 
 
 
