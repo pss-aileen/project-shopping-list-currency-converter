@@ -1,10 +1,8 @@
 'use strict';
 {
-  
   /******************************************************
     グローバル変数
   ******************************************************/
-  
   let LOCAL_CURRENCY = "MYR";
   let FOREIGN_CURRENCY = "JPY";
   let RATE = 0;
@@ -13,22 +11,12 @@
   /******************************************************
     テスト、実験として色々なものは共通化
   ******************************************************/
-  
-  // 小数点を任意の長朝で丸める関数
   function roundToDecimalPlace(number, decimalPlace) {
     return number.toFixed(decimalPlace);
   }
 
-  // foreign priceを計算する関数
   function calculateForeignPrice(localPrice) {
     return localPrice * RATE;
-  }
-
-  // 最終的な出力結果はこれにする...？
-  function GET_foreignPrice(localPrice, desimalPlace) {
-    let result = calculateForeignPrice(localPrice);
-    result = roundToDecimalPlace(result, desimalPlace);
-    return result;
   }
 
   async function fetchData(URL) {
@@ -45,27 +33,12 @@
     }
   }
 
-  function updateInputCurrency() {
-    LOCAL_CURRENCY = document.getElementById("input-local-currency").value;
-    FOREIGN_CURRENCY = document.getElementById("input-foreign-currency").value;
+  
+  function GET_foreignPrice(localPrice, desimalPlace) {
+    let result = calculateForeignPrice(localPrice);
+    result = roundToDecimalPlace(result, desimalPlace);
+    return result;
   }
-
-  async function updateRate() {
-    const data = await fetchData(`https://open.er-api.com/v6/latest/${LOCAL_CURRENCY}`);
-    RATE = data.rates[FOREIGN_CURRENCY];
-    console.log("UPDATED RATE", RATE);
-    return data.rates[FOREIGN_CURRENCY];
-  }
-
-  async function setValues() {
-    console.log("SET VALUE");
-    const localPrice = document.getElementById("local-price");
-    const foreignPrice = document.getElementById("foreign-price");
-
-    updateRate().then(() => {
-      foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
-    });
-   }
 
   /******************************************************
     initLoad
@@ -117,41 +90,23 @@
     console.log(localStorage.getItem("currencySetting"), localStorage.getItem("shoppingList"));
   }
 
-  /******************************************************
-    class Currency
-    currencyをsetし、関連の値をを呼び出す
-  ******************************************************/
-  
-  // class Currency {
-  //   constructor(localCurrency, foreignCurrency) {
-  //     this.localCurrency = localCurrency;
-  //     this.foreignCurrency = foreignCurrency;
-  //     LOCAL_CURRENCY = this.localCurrency;
-  //     FOREIGN_CURRENCY = this.foreignCurrency;
-  //     console.log(`LOCAL_CURRENCY: ${LOCAL_CURRENCY}, FOREIFN_CURRENCY: ${FOREIGN_CURRENCY}`);
-  //   }
-  // }
- 
+
   /******************************************************
     CURRENCY一覧取得、初期値の設定
   ******************************************************/
   
-  const inputLocalCurrency = document.getElementById("input-local-currency");
-  const inputForeignCurrency = document.getElementById("input-foreign-currency");
-
   InitLoadFunction();
 
   async function InitLoadFunction() {
     const data = await fetchData("https://open.er-api.com/v6/latest/AED");
     const currencyCodes = Object.keys(data.rates);
-    // console.log(currencyCodes);
-    generateCurrencyOptions(currencyCodes, inputLocalCurrency, LOCAL_CURRENCY);
-    generateCurrencyOptions(currencyCodes, inputForeignCurrency, FOREIGN_CURRENCY);
-    setValues();
+    appendChildren(document.getElementById("input-local-currency"), currencyCodes, LOCAL_CURRENCY);
+    appendChildren(document.getElementById("input-foreign-currency"), currencyCodes, FOREIGN_CURRENCY);
+    setPrices();
     updateShoppingListCurrency();
   }
 
-  function generateCurrencyOptions(currencyCodes, selectElement, selectedCurrencyCode) {
+  function appendChildren(selectElement, currencyCodes, selectedCurrencyCode) {
     for (const code of currencyCodes) {
       const option = document.createElement("option");
       option.textContent = code;
@@ -164,19 +119,44 @@
  
   function changeValue() {
     updateInputCurrency();
-    setValues();
+    setPrices();
     updateShoppingListCurrency();
   }
 
+  function updateInputCurrency() {
+    LOCAL_CURRENCY = document.getElementById("input-local-currency").value;
+    FOREIGN_CURRENCY = document.getElementById("input-foreign-currency").value;
+  }
+
+  async function setPrices() {
+    console.log("SET PRICES");
+    const localPrice = document.getElementById("local-price");
+    const foreignPrice = document.getElementById("foreign-price");
+
+    updateRate().then(() => {
+      foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
+    });
+  }
+
+  async function updateRate() {
+    const data = await fetchData(`https://open.er-api.com/v6/latest/${LOCAL_CURRENCY}`);
+    RATE = data.rates[FOREIGN_CURRENCY];
+    console.log("UPDATED RATE", RATE);
+    return data.rates[FOREIGN_CURRENCY];
+  }
+
   function updateShoppingListCurrency() {
-    shoppingListLocalCurrency.textContent = LOCAL_CURRENCY;
-    shoppingListForeignCurrency.textContent = FOREIGN_CURRENCY;
+    document.getElementById("shopping-list-local-currency").textContent = LOCAL_CURRENCY;
+    document.getElementById("shopping-list-foreign-currency").textContent = FOREIGN_CURRENCY;
   }
 
   /******************************************************
     Currency変更、値を変更した時に発火するイベント
   ******************************************************/
   
+  const inputLocalCurrency = document.getElementById("input-local-currency");
+  const inputForeignCurrency = document.getElementById("input-foreign-currency");
+
   inputLocalCurrency.addEventListener("input", changeValue);
   inputForeignCurrency.addEventListener("input", changeValue);
   document.getElementById("local-price").addEventListener("change", changeValue);
@@ -185,7 +165,6 @@
     [LOCAL_CURRENCY, FOREIGN_CURRENCY] = [FOREIGN_CURRENCY, LOCAL_CURRENCY];
     inputLocalCurrency.value = LOCAL_CURRENCY;
     inputForeignCurrency.value = FOREIGN_CURRENCY;
-    // updateRate();
     changeValue();
   });
 
@@ -198,9 +177,6 @@
     Shopping List追加
   ******************************************************/
   
-  const shoppingListLocalCurrency = document.getElementById("shopping-list-local-currency");
-  const shoppingListForeignCurrency = document.getElementById("shopping-list-foreign-currency");
-  
   const CreateListBtn = document.getElementById("btn-create-shoppping-list-element");
 
   CreateListBtn.addEventListener("click", () => {
@@ -211,10 +187,8 @@
     const localPrice = Number(localPriceElement.value);
     
     const div_item = createNewElement("div", ["shopping-list__item"], null);
-
     const div_productName = createNewElement("div", ["shopping-list__product-name"], null);
     const span_productNmae = createNewElement("span", null, productName);
-
     const div_productPrice = createNewElement("div", ["shopping-list__product-price"], null);
     const table = createNewElement("table", null, null);
     const tr_local = createNewElement("tr", null, null);
@@ -223,12 +197,10 @@
     const tr_foreign = createNewElement("tr", null, null);
     const td_localCurrency = createNewElement("td", null, LOCAL_CURRENCY);
     const td_foreignCurrency = createNewElement("td", null, FOREIGN_CURRENCY);
-
     const div_delete = createNewElement("div", ["shopping-list__delete"], null);
     const i_deleteIcon = createNewElement("i", ["shopping-list__delete-icon", "bi", "bi-x-lg"], null);
 
     const targetElement = document.getElementById("shopping-list-content");
-
     targetElement.appendChild(div_item);
     appendChildren(div_item, [div_productName, div_productPrice, div_delete]);
     appendChildren(div_productName, [span_productNmae]);
@@ -246,16 +218,14 @@
 
     SHOPPING_LISTS.push(object);
 
-    const localAmount = document.getElementById("shopping-list-total-local-value");
-    const foreignAmount = document.getElementById("shopping-list-total-foreign-value");
-
     let amount = 0;
     for (let i = 0; i < SHOPPING_LISTS.length; i++) {
       const value = SHOPPING_LISTS[i]["localPrice"];
       amount = amount + value;
     }
-    localAmount.textContent = amount;
-    foreignAmount.textContent = GET_foreignPrice(amount, 2);
+
+    document.getElementById("shopping-list-total-local-value").textContent = amount;
+    document.getElementById("shopping-list-total-foreign-value").textContent = GET_foreignPrice(amount, 2);
 
     function createNewElement(tagName, classNames, textContent) {
       const element = document.createElement(tagName);
@@ -288,8 +258,6 @@
       foreignPriceElements[i].textContent = NewForeignPrice;
     }
   }
-
-
 
 
 }
