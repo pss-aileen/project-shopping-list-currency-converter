@@ -42,14 +42,9 @@
       </div>
     </div>
 
-    <!--
-      <span id="local-currency"></span>
-      <span id="foreign-currency"></span>
-    -->
-
     <div class="related-input-btns">
-      <button id="btn-save" class="btn">SAVE CURRENCY</button>
-      <button id="btn-call-local-storage" class="btn">設定を呼び出す</button>
+      <button id="btn-save" class="btn">レートを保存</button>
+      <button id="btn-call-local-storage" class="btn">レートを読み込む</button>
 
     </div>
 
@@ -57,29 +52,16 @@
 
     <h2 class="heading">Shopping List</h2>
 
+    <div class="shopping-list-add">
+      <input type="text" id="new-product" value="TEST" placeholder="PRODUCT NAME"
+        class="shopping-list-add__input shopping-list-add__input--product-name">
+      <input type="number" id="new-local-price" min="0" value="100" placeholder="PRICE"
+        class="shopping-list-add__input shopping-list-add__input--product-price">
+      <button id="btn-create-shoppping-list-element" class="shopping-list-add__button"><i
+          class="bi bi-plus-lg"></i></button>
+    </div>
+
     <div class="shopping-list" id="shopping-list-content">
-      <!-- <div class="shopping-list__item">
-        <div class="shopping-list__product-name">
-          <span>
-            carrot
-          </span>
-        </div>
-        <div class="shopping-list__product-price">
-          <table>
-            <tr>
-              <td>100</td>
-              <td>JPY</td>
-            </tr>
-            <tr>
-              <td>3000</td>
-              <td>MYR</td>
-            </tr>
-          </table>
-        </div>
-        <div class="shopping-list__delete">
-          <i class="bi bi-x-lg shopping-list__delete-icon"></i>
-        </div>
-      </div> -->
     </div>
 
     <div class="shopping-list-total">
@@ -100,21 +82,15 @@
       </div>
     </div>
 
-    <div class="shopping-list-add">
-      <input type="text" id="new-product" value="TEST" placeholder="product name"
-        class="shopping-list-add__input shopping-list-add__input--product-name">
-      <input type="number" id="new-local-price" min="0" value="10" placeholder="10"
-        class="shopping-list-add__input shopping-list-add__input--product-price">
-      <button id="btn-create-shoppping-list-element" class="shopping-list-add__button"><i
-          class="bi bi-plus-lg"></i></button>
-    </div>
-
     <div class="shopping-list-delete">
       <button class="shopping-list-delete__btn">DELETE ALL LISTS</button>
     </div>
 
-    <button id="btn-recalc" class="btn">再計算</button>
-    <!-- <button id="btn-update-currency" class="btn">通貨をアップデート</button> -->
+    <button id="btn-save-shopping-list" class="btn">ショッピングリストを保存</button>
+    <button id="btn-call-shopping-list" class="btn">ショッピングリストを読み込む</button>
+
+    <!-- <button id="btn-recalc" class="btn">再計算</button> -->
+
 
   </div><!--/wrapper-->
 
