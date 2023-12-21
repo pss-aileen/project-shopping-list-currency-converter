@@ -58,13 +58,9 @@
   }
 
   async function setValues() {
-    console.log("setValue");
+    console.log("SET VALUE");
     const localPrice = document.getElementById("local-price");
     const foreignPrice = document.getElementById("foreign-price");
-    
-    // await updateRate();
-    // foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
-    // console.log(foreignPrice);
 
     updateRate().then(() => {
       foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
@@ -126,30 +122,15 @@
     currencyをsetし、関連の値をを呼び出す
   ******************************************************/
   
-  class Currency {
-    constructor(localCurrency, foreignCurrency) {
-      this.localCurrency = localCurrency;
-      this.foreignCurrency = foreignCurrency;
-      LOCAL_CURRENCY = this.localCurrency;
-      FOREIGN_CURRENCY = this.foreignCurrency;
-      console.log(`LOCAL_CURRENCY: ${LOCAL_CURRENCY}, FOREIFN_CURRENCY: ${FOREIGN_CURRENCY}`);
-    }
-    
-    // async updateRate() {
-    //   const data = await fetchData(`https://open.er-api.com/v6/latest/${this.localCurrency}`);
-    //   RATE = data.rates[this.foreignCurrency];
-    //   return data.rates[this.foreignCurrency];
-    // }
-
-    // async setValues() {
-    //   const localPrice = document.getElementById("local-price");
-    //   const foreignPrice = document.getElementById("foreign-price");
-
-    //   this.updateRate().then(() => {
-    //     foreignPrice.textContent = GET_foreignPrice(localPrice.value, 4);
-    //   });
-    //  }
-  }
+  // class Currency {
+  //   constructor(localCurrency, foreignCurrency) {
+  //     this.localCurrency = localCurrency;
+  //     this.foreignCurrency = foreignCurrency;
+  //     LOCAL_CURRENCY = this.localCurrency;
+  //     FOREIGN_CURRENCY = this.foreignCurrency;
+  //     console.log(`LOCAL_CURRENCY: ${LOCAL_CURRENCY}, FOREIFN_CURRENCY: ${FOREIGN_CURRENCY}`);
+  //   }
+  // }
  
   /******************************************************
     CURRENCY一覧取得、初期値の設定
@@ -167,6 +148,7 @@
     generateCurrencyOptions(currencyCodes, inputLocalCurrency, LOCAL_CURRENCY);
     generateCurrencyOptions(currencyCodes, inputForeignCurrency, FOREIGN_CURRENCY);
     setValues();
+    updateShoppingListCurrency();
   }
 
   function generateCurrencyOptions(currencyCodes, selectElement, selectedCurrencyCode) {
@@ -183,17 +165,15 @@
   }
  
   function changeValue() {
-    // updateInputCurrency();
-    // LOCAL_CURRENCY = inputLocalCurrency.value;
-    // FOREIGN_CURRENCY = inputForeignCurrency.value;
-    // const data = new Currency(LOCAL_CURRENCY, FOREIGN_CURRENCY);
-    // updateInputCurrency();
+    updateInputCurrency();
     setValues();
-    shoppingListLocalCurrency.textContent = LOCAL_CURRENCY;
-    shoppingListForeignCurrency.textContent = FOREIGN_CURRENCY;
-
+    updateShoppingListCurrency();
   }
 
+  function updateShoppingListCurrency() {
+    shoppingListLocalCurrency.textContent = LOCAL_CURRENCY;
+    shoppingListForeignCurrency.textContent = FOREIGN_CURRENCY;
+  }
 
   /******************************************************
     Currency変更、値を変更した時に発火するイベント
@@ -228,12 +208,6 @@
 
     getProductLocalPriceNumber() {
       return Number(this.localPrice);
-    }
-
-    getProductForeignPriceNumber() {
-      // return roundToTwoDecimalPlaces(this.rate * Number(this.localPrice));
-      // return this.rate * Number(this.localPrice);
-      return "結果考え中...";
     }
   }
 
@@ -276,7 +250,6 @@
     span_productNmae.textContent = item.getProductNameString();
     td_localValue.textContent = item.getProductLocalPriceNumber();
     td_localValue.classList.add("get-product-local-price");
-    // td_foreignValue.textContent = item.getProductForeignPriceNumber();
     td_foreignValue.textContent = GET_foreignPrice(item.getProductLocalPriceNumber(), 2);
     td_foreignValue.classList.add("get-product-foreign-price");
     td_localCurrency.textContent = LOCAL_CURRENCY;
