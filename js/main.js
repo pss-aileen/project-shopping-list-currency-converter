@@ -193,22 +193,6 @@
     Shopping List
   ******************************************************/
 
-  class Product {
-    constructor(productName, localPrice, rate) {
-      this.productName = productName;
-      this.localPrice = localPrice;
-      this.rate = rate;
-    }
-
-    getProductNameString() {
-      return this.productName;
-    }
-
-    getProductLocalPriceNumber() {
-      return Number(this.localPrice);
-    }
-  }
-
 
   /******************************************************
     Shopping List追加
