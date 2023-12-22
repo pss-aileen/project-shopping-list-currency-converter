@@ -4,40 +4,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping List Currency Converter</title>
+  <title>Currency Converter with Shopping List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <h1>Shopping List Currency Converter</h1>
+  <div class="wrapper">
 
-  <select id="input-local-currency">
-  </select>
+    <h1 class="site-title">Currency Converter<br><span class="site-title__small">with</span> Shopping List</h1>
 
-  <select id="input-foreign-currency">
-  </select>
+    <p class="site-lead">This web app help to manage your travel money.</p>
 
-  <p>
-    <input type="number" value="1" min="0" id="local-price">
-    <span id="local-currency"></span>
-    は
-    <span id="foreign-price"></span>
-    <span id="foreign-currency"></span>
-  </p>
+    <div class="input-currency">
+      <div class="input-currency__group">
+        <input type="number" value="1" min="0" id="local-price" class="input-currency__local-value" placeholder="FROM">
+        <div class="input-currency__select-wrapper">
+          <i class="bi bi-chevron-down input-currency__select-button"></i>
+          <select id="input-local-currency" class="input-currency__select">
+          </select>
+        </div>
+      </div>
+      <button id="btn-swap-currency" class="btn-swap-currency">
+        <i class="bi bi-arrow-down-up"></i>
+      </button>
+      <div class="input-currency__group">
+        <span id="foreign-price" class="input-currency__foreign-value">FROM</span>
+        <div class="input-currency__select-wrapper">
+          <i class="bi bi-chevron-down input-currency__select-button"></i>
+          <select id="input-foreign-currency" class="input-currency__select">
+          </select>
+        </div>
+      </div>
+    </div>
 
-  <p>
-  <h2>商品追加</h2>
-  <input type="text" id="new-product">
-  <input type="number" id="new-local-price" min="0">
-  </p>
+    <div class="related-input-btns">
+      <button id="btn-save" class="btn">SAVE CURRENCY</button>
+      <button id="btn-call-local-storage" class="btn">LOAD CURRENCY</button>
 
-  <ul id="shopping-list">
-    <li>
-      <span>商品</span>
-      <span>JPY</span>
-      <span>MYR</span>
-    </li>
-  </ul>
+    </div>
+
+    <hr class="border">
+
+    <h2 class="heading">Shopping List</h2>
+
+    <div class="shopping-list-add">
+      <input type="text" id="new-product" value="" placeholder="PRODUCT NAME"
+        class="shopping-list-add__input shopping-list-add__input--product-name">
+      <input type="number" id="new-local-price" min="0" value="" placeholder="PRICE"
+        class="shopping-list-add__input shopping-list-add__input--product-price">
+      <button id="btn-create-shoppping-list-element" class="shopping-list-add__button"><i
+          class="bi bi-plus-lg"></i></button>
+    </div>
+
+    <div class="shopping-list" id="shopping-list-content">
+    </div>
+
+    <div class="shopping-list-total">
+      <div class="shopping-list-total__heading">
+        TOTAL
+      </div>
+      <div class="shopping-list-total__result">
+        <table class="shopping-list-total__table">
+          <tr class="shopping-list-total__local">
+            <td id="shopping-list-total-local-value">0</td>
+            <td id="shopping-list-local-currency">FROM</td>
+          </tr>
+          <tr class="shopping-list-total__foreign">
+            <td id="shopping-list-total-foreign-value">0</td>
+            <td id="shopping-list-foreign-currency">TO</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="shopping-list-delete">
+      <button id="btn-delete-shopping-list" class="shopping-list-delete__btn">DELETE ALL LISTS</button>
+    </div>
+
+    <button id="btn-save-shopping-list" class="btn">SAVE SHOPPING LIST</button>
+    <button id="btn-call-shopping-list" class="btn">LOAD SHOPPING LIST</button>
+
+    <!-- <button id="btn-recalc" class="btn">再計算</button> -->
+
+
+  </div><!--/wrapper-->
 
   <script src="js/main.js"></script>
 </body>
