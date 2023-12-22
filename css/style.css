@@ -55,6 +55,9 @@ input {
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
 }
+.site-title__small {
+  font-size: 18px;
+}
 
 .heading {
   font-size: 22px;
