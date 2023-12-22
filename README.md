@@ -1,3 +1,5 @@
+![Currency Converter with Shopping List](project/readme-image.jpg)
+
 # Currency Converter with Shopping List
 海外で買い物をする際「日本円ではいくらなのか？」を簡単に調べることができ、買い物リストを作り一時的に保存して確認できるWebアプリです。
 ※日本円以外も確認できます。
