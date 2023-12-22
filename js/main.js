@@ -4,9 +4,9 @@
     グローバル変数
   ******************************************************/
   let LOCAL_CURRENCY = "JPY";
-  let FOREIGN_CURRENCY = "MYR";
+  let FOREIGN_CURRENCY = "USD";
   let RATE = 0;
-  const SHOPPING_LISTS = [];
+  let SHOPPING_LISTS = [];
 
   /******************************************************
     テスト、実験として色々なものは共通化
@@ -104,6 +104,9 @@
   document.getElementById("btn-call-shopping-list").addEventListener("click", () => {
     const shoppingListFromLocalStorage = JSON.parse(localStorage.getItem("shoppingList"));
     console.log(shoppingListFromLocalStorage);
+    console.log(SHOPPING_LISTS);
+    SHOPPING_LISTS = shoppingListFromLocalStorage;
+    createShoppingListElement();
   });
 
 
@@ -216,42 +219,49 @@
     }
 
     SHOPPING_LISTS.push(object);
-
-    // 配列から要素を毎回作り直す方向で。
-    // 削除を押した場合も配列から抜かして、再生成
     
-    const div_item = createNewElement("div", ["shopping-list__item"], null);
-    const div_productName = createNewElement("div", ["shopping-list__product-name"], null);
-    const span_productNmae = createNewElement("span", null, productName);
-    const div_productPrice = createNewElement("div", ["shopping-list__product-price"], null);
-    const table = createNewElement("table", null, null);
-    const tr_local = createNewElement("tr", null, null);
-    const td_localValue = createNewElement("td", ["get-product-local-price"], localPrice);
-    const td_foreignValue = createNewElement("td", ["get-product-foreign-price"], GET_foreignPrice(localPrice, 2));
-    const tr_foreign = createNewElement("tr", null, null);
-    const td_localCurrency = createNewElement("td", null, LOCAL_CURRENCY);
-    const td_foreignCurrency = createNewElement("td", null, FOREIGN_CURRENCY);
-    const div_delete = createNewElement("div", ["shopping-list__delete"], null);
-    const i_deleteIcon = createNewElement("i", ["shopping-list__delete-icon", "bi", "bi-x-lg"], null);
+    createShoppingListElement();
 
+    productNameElement.value = "";
+    localPriceElement.value = "";
+  });
+
+  function createShoppingListElement() {
     const targetElement = document.getElementById("shopping-list-content");
-    targetElement.appendChild(div_item);
-    appendChildren(div_item, [div_productName, div_productPrice, div_delete]);
-    appendChildren(div_productName, [span_productNmae]);
-    appendChildren(div_productPrice, [table]);
-    appendChildren(table, [tr_local, tr_foreign])
-    appendChildren(tr_local, [td_localValue, td_localCurrency]);
-    appendChildren(tr_foreign, [td_foreignValue, td_foreignCurrency]);
-    appendChildren(div_delete, [i_deleteIcon]);
+    while (targetElement.firstChild) {
+      targetElement.removeChild(targetElement.firstChild);
+    }
 
-
-
+    for (const product of SHOPPING_LISTS) {
+      const div_item = createNewElement("div", ["shopping-list__item"], null);
+      const div_productName = createNewElement("div", ["shopping-list__product-name"], null);
+      const span_productNmae = createNewElement("span", null, product["productName"]);
+      const div_productPrice = createNewElement("div", ["shopping-list__product-price"], null);
+      const table = createNewElement("table", null, null);
+      const tr_local = createNewElement("tr", null, null);
+      const td_localValue = createNewElement("td", ["get-product-local-price"], product["localPrice"]);
+      const td_foreignValue = createNewElement("td", ["get-product-foreign-price"], GET_foreignPrice(product["localPrice"], 2));
+      const tr_foreign = createNewElement("tr", null, null);
+      const td_localCurrency = createNewElement("td", null, LOCAL_CURRENCY);
+      const td_foreignCurrency = createNewElement("td", null, FOREIGN_CURRENCY);
+      const div_delete = createNewElement("div", ["shopping-list__delete"], null);
+      const i_deleteIcon = createNewElement("i", ["shopping-list__delete-icon", "bi", "bi-x-lg"], null);
+  
+      targetElement.appendChild(div_item);
+      appendChildren(div_item, [div_productName, div_productPrice, div_delete]);
+      appendChildren(div_productName, [span_productNmae]);
+      appendChildren(div_productPrice, [table]);
+      appendChildren(table, [tr_local, tr_foreign])
+      appendChildren(tr_local, [td_localValue, td_localCurrency]);
+      appendChildren(tr_foreign, [td_foreignValue, td_foreignCurrency]);
+      appendChildren(div_delete, [i_deleteIcon]);
+    }
+    
     let amount = 0;
     for (let i = 0; i < SHOPPING_LISTS.length; i++) {
       const value = SHOPPING_LISTS[i]["localPrice"];
       amount = amount + value;
     }
-
     document.getElementById("shopping-list-total-local-value").textContent = amount;
     document.getElementById("shopping-list-total-foreign-value").textContent = GET_foreignPrice(amount, 2);
 
@@ -269,10 +279,7 @@
     function appendChildren(parent, children) {
       children.forEach(child => parent.appendChild(child));
     }
-
-    productNameElement.value = "";
-    localPriceElement.value = "";
-  });
+  }
 
 
   // document.getElementById("btn-recalc").addEventListener("click", () => {
@@ -288,6 +295,11 @@
       foreignPriceElements[i].textContent = NewForeignPrice;
     }
   }
+
+  document.getElementById("btn-delete-shopping-list").addEventListener("click", () => {
+    SHOPPING_LISTS = [];
+    createShoppingListElement();
+  });
 
 
 }

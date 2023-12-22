@@ -202,6 +202,8 @@ input {
   padding: 8px 16px;
   font-size: 16px;
   text-align: right;
+  display: flex;
+  align-items: center;
 }
 .shopping-list__product-price table {
   width: 100%;
@@ -209,7 +211,7 @@ input {
   line-height: 1.3;
 }
 .shopping-list__delete {
-  display: flex;
+  display: none;
   align-items: center;
   margin-right: 8px;
   margin-left: 8px;
