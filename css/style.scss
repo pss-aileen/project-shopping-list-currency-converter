@@ -59,6 +59,10 @@ input {
   background: var(--gradient);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
+
+  &__small {
+    font-size: 18px;
+  }
 }
 
 .heading {
