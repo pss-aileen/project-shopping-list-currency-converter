@@ -85,8 +85,9 @@
   /******************************************************
    LocalStorage 呼び出し
    ******************************************************/
+  callLocalStorageCurrency();
   
-  document.getElementById("btn-call-local-storage").addEventListener("click", () => {
+  function callLocalStorageCurrency() {
     const currencySettingFromLocalStorage = JSON.parse(localStorage.getItem("currencySetting"));
     console.log(currencySettingFromLocalStorage);
 
@@ -99,7 +100,7 @@
     document.getElementById("input-foreign-currency").value = FOREIGN_CURRENCY;
     setPrices();
     updateShoppingListCurrency();
-  });
+  }
   
   document.getElementById("btn-call-shopping-list").addEventListener("click", () => {
     const shoppingListFromLocalStorage = JSON.parse(localStorage.getItem("shoppingList"));
