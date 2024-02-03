@@ -8,6 +8,22 @@
   box-sizing: border-box;
 }
 
+.darkmode {
+  background: #333;
+  color: #f8f8f8;
+}
+.darkmode input,
+.darkmode select {
+  background: #666;
+  color: #f8f8f8;
+}
+.darkmode input::-moz-placeholder {
+  color: #ccc;
+}
+.darkmode input::placeholder {
+  color: #ccc;
+}
+
 body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
