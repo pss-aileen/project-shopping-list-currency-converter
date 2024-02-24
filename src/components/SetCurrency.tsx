@@ -1,23 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from './Button'
-
+import CurrencyInputForm from './CurrencyInputForm'
+import getCurrency from '../utils/getCurrencyCode'
 
 const SetCurrency = () => {
+  const [currencyFrom, setCurrencyFrom] = useState("");
+  const [currencyTo, setCurrencyTo] = useState("");
+  const [symbols, setSymbols] = useState([]);
+
+  useEffect(() => {
+    async function getCurrencyData() {
+      const data = await getCurrency();
+      setSymbols(data);
+    }
+    getCurrencyData();
+  }, []);
+
+  console.log(symbols);
+
   return (
     <section className='setCurrency'>
-      <div>
-        <input type="text" placeholder='0' />
-        <select name="" id="">
-          <option value="">MYR</option>
-        </select>
-      </div>
-      <div>
-        <input type="text" placeholder='0' />
-        <select name="" id="">
-          <option value="">JPY</option>
-        </select>
-      </div>
-
+      <CurrencyInputForm />
+      <CurrencyInputForm />
       <Button>SAVE CURRENCY</Button>
     </section>
   )

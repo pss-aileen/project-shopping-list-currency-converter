@@ -10,7 +10,7 @@ function App() {
       
       <SetCurrency />
 
-      <hr />
+      <hr className='hr'/>
 
       <h2>Shopping List</h2>
 
