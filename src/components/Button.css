@@ -1,0 +1,16 @@
+.button {
+  background: var(--gradient);
+  color: #fff;
+  padding: 16px;
+  width: 100%;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity .3s;
+  margin-top: 16px;
+}
+
+.button:hover {
+  opacity: .8;
+}
