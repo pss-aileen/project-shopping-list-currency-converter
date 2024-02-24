@@ -1,3 +1,4 @@
 .App {
-
+  max-width: 320px;
+  margin: 48px auto 80px;
 }

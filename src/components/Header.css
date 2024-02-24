@@ -1,0 +1,22 @@
+.header {
+  text-align: center;
+}
+
+.site-title {
+  display: block;
+  font-size: 24px;
+  text-align: center;
+  font-weight: normal;
+  background: var(--gradient);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+.site-title__small {
+  font-size: 18px;
+  display: block;
+}
+
+.site-lead {
+  font-size: 12px;
+}
