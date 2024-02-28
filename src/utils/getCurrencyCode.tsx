@@ -1,3 +1,5 @@
+
+
 const getCurrency = async () => {
   const currencyJsonUrl = "../data/common-currency.json";
 

@@ -1,17 +1,32 @@
 import React from 'react'
 
-const CurrencyInputForm = () => {
+interface CurrencyInputFormProps {
+  symbols?: {
+    [key: string]: {
+      symbol: string,
+      name: string,
+      symbol_native: string,
+      decimal_digits: number,
+      rounding: number,
+      code: string,
+      name_plural: string
+    }
+  };
+}
 
-  // propsで国一覧のデータをフェッチして、ここに受け渡してくる
-  // selectで展開する
-  // そのselectが変更されたら、useStateで更新して、SetCurrency、Appに値を返す
-  // その値をもとにリストも変更できるようにする
+const CurrencyInputForm: React.FC<CurrencyInputFormProps> = ({ symbols }) => {
+
+  if (!symbols) {
+    return <div>Loading...</div>; // または他の適切なフィードバックをユーザーに提供
+  }
 
   return (
     <div className='input-item-wrapper'>
       <input type="text" placeholder='0' />
       <select name="" id="">
-        <option value="">MYR</option>
+        {Object.keys(symbols).map((key) => (
+          <option key={key} value={key}>{symbols[key].code}</option>
+        ))}
       </select>
     </div>
   )
